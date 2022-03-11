@@ -1,0 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@900&family=Quicksand:wght@300;400;500;600;700&family=Roboto&display=swap');
+body {
+    background-color: black;
+    font-family: Quicksand;
+    color: white;
+    margin: 0px;
+}
+
+.level2{
+    background-color: #212121;
+}
+.level3{
+    background-color: #303030;
+}
+.level4{
+    background-color: #424242;
+}

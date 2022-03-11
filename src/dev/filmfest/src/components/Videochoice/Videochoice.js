@@ -3,10 +3,10 @@ export default function Videochoice(props){
     const title=props.info["title"];
     const thumbnail=props.info["thumbnail"];
     return(
-        <>
+        <div>
         <p>{id}</p>
         <p>{title}</p>
         <img src={thumbnail}/>
-        </>
+        </div>
     );
 }

@@ -1,7 +1,10 @@
+import '../../resources/Shared.css';
+import './TitleBar.css';
+
 export default function TitleBar(){
     return(
-        <span>
-            <p>Film Fest</p>
+        <span id='TitleBar'>
+            <h1 id='TitleBarText' className="level2">Film Fest</h1>
         </span>
     );
 }
