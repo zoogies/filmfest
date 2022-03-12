@@ -1,8 +1,17 @@
 #TitleBar{
     margin: 0px;
+    display: flex;
+    height: 80px;
 }
 
 #TitleBarText{
     margin: 0px;
     padding: 20px;
+}
+
+.logo{
+    width: auto;
+    height: 100%;
+    padding: 10px;
+    vertical-align: middle;
 }

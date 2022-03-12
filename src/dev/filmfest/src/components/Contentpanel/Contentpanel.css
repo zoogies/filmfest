@@ -1,0 +1,8 @@
+.contentpanel{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin: 15px;
+    align-items: flex-start;
+    justify-content: space-evenly;
+}
