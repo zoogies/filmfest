@@ -7,7 +7,9 @@ export default function Videochoice(props){
     const thumbnail=props.info["thumbnail"];
     return(
         <div className='videochoice level2'>
-            <img className='videothumb' src={thumbnail}/>
+            <div className='videothumb'>
+                <img className='thumb' src={thumbnail}/>
+            </div>
             <p className='titletext'>{title}</p>
         </div>
     );

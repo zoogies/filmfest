@@ -1,19 +1,35 @@
 .videochoice{
     width: 300px;
     height: 200px;
-    text-align: center;
     border-radius: 10px;
     margin: 10px;
     -webkit-box-shadow: 0px 0px 17px 10px rgb(0 0 0 / 23%);
     box-shadow: 0px 0px 17px 10px rgb(0 0 0 / 23%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .videothumb{
-    width: 275px;
-    height: 175px;
+    text-align: center;
+    width: 93%;
+    height: 80%;
+    padding: 7px;
+    padding-left: 10px;
+    padding-bottom: 0px;
+    overflow: hidden;
+}
+
+.thumb{
+    width: 100%;
+    border-radius: 10px;
 }
 
 .titletext{
     margin: 0px;
-    padding: 0px;
+    padding: 5px;
+    padding-top: 3px;
+    padding-left: 10px;
+    max-width: 275px;
+    overflow: hidden;
 }

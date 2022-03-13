@@ -6,6 +6,9 @@ body {
     margin: 0px;
 }
 
+.level1{
+    background-color: #212121;
+}
 .level2{
     background-color: #303030;
 }

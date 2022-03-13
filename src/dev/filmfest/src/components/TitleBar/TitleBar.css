@@ -2,16 +2,23 @@
     margin: 0px;
     display: flex;
     height: 80px;
+    box-shadow: 0px -2px 27px 2px #000000;
+    align-items: center;
 }
 
 #TitleBarText{
     margin: 0px;
     padding: 20px;
+    padding-left: 10px;
+}
+
+.logoholder{
+    width: auto;
+    height: 60px;
+    padding-left: 10px;
 }
 
 .logo{
     width: auto;
     height: 100%;
-    padding: 10px;
-    vertical-align: middle;
 }
