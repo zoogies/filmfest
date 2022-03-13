@@ -10,9 +10,9 @@ export default function TitleBar(){
                 <img className='logo' src={logo}/>
             </div>
             <h1 id='TitleBarText'>Film Fest</h1>
-            <Navbutton text="Recent"/>
-            <Navbutton text="Profile"/>
-            <Navbutton text="Film Fest Archive"/>
+            <Navbutton text="Recent" location="recent"/>
+            <Navbutton text="Profile" location="profile"/>
+            <Navbutton text="Film Fest Archive" location="archive"/>
         </span>
     );
 }

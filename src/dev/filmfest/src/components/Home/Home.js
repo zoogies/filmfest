@@ -1,5 +1,4 @@
 import Contentpanel from "../Contentpanel/Contentpanel";
-import TitleBar from "../TitleBar/TitleBar";
 
 //temp testing data for creating video panels
 const data = [
@@ -13,7 +12,6 @@ const data = [
 export default function Home(){
     return(
         <>
-        <TitleBar/>
         <Contentpanel content={data}/>
         </>
     );
