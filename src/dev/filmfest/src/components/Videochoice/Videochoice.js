@@ -6,7 +6,7 @@ export default function Videochoice(props){
     const title=props.info["title"];
     const thumbnail=props.info["thumbnail"];
     return(
-        <div className='videochoice level2'>
+        <div onClick={() => {window.location.href = "http://localhost:3000/watch/"+id}} className='videochoice level2'>
             <div className='videothumb'>
                 <img className='thumb' src={thumbnail}/>
             </div>

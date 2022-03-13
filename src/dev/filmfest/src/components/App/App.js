@@ -4,6 +4,8 @@ import Archive from '../Archive/Archive.js';
 import '../../resources/Shared.css';
 import TitleBar from "../TitleBar/TitleBar";
 import Redirect from "../Redirect/Redirect";
+import Watch from "../Watch/Watch";
+import Notfound from "../Notfound/Notfound";
 
 import {
   BrowserRouter as Router,
@@ -20,6 +22,8 @@ function App() {
         <Route path="/" element={<Redirect/>}/>
         <Route path="/recent" element={<Home/>}/>
         <Route path="/archive" element={<Archive/>}/>
+        <Route path="/watch/:videoid" element={<Watch/>}/>
+        <Route path="*" element={<Notfound/>}/>
       </Routes>
     </Router>
   );
