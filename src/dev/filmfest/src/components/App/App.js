@@ -6,6 +6,7 @@ import TitleBar from "../TitleBar/TitleBar";
 import Redirect from "../Redirect/Redirect";
 import Watch from "../Watch/Watch";
 import Notfound from "../Notfound/Notfound";
+import User from "../User/User";
 
 import {
   BrowserRouter as Router,
@@ -13,6 +14,7 @@ import {
   Route,
   Link
 } from "react-router-dom";
+import Profilehandler from '../Profilehandler/Profilehandler';
 
 function App() {
   return (
@@ -23,6 +25,8 @@ function App() {
         <Route path="/recent" element={<Home/>}/>
         <Route path="/archive" element={<Archive/>}/>
         <Route path="/watch/:videoid" element={<Watch/>}/>
+        <Route path="/user/:userid" element={<User/>}/>
+        <Route path="/profile" element={<Profilehandler/>}/>
         <Route path="*" element={<Notfound/>}/>
       </Routes>
     </Router>

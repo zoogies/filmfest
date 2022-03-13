@@ -1,0 +1,14 @@
+.signin{
+    text-align: center;
+    display: flex;
+    margin: 20px;
+    justify-content: center;
+    justify-self: center;
+    margin-top: 50px;
+}
+.signinitems{
+    width: 200px;
+    border-radius: 15px;
+    -webkit-box-shadow: 0px 0px 17px 10px rgb(0 0 0 / 23%);
+    box-shadow: 0px 0px 17px 10px rgb(0 0 0 / 23%);
+}
