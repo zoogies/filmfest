@@ -1,29 +1,35 @@
-.videoandrec{
-    display: flex;
+.videoandtitle{
     width: 100%;
+    max-width: 1500px;
 }
 
 .player{
-    margin: 30px;
+    margin: 10px;
+    display: flex;
+    flex-wrap: wrap;
     width: 100%;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .video{
-    width: 100%;
-    max-width: 1000px;
     -webkit-box-shadow: 0px 0px 17px 10px rgb(0 0 0 / 23%);
     box-shadow: 0px 0px 17px 10px rgb(0 0 0 / 23%);
+    width: 100%;
 }
 
 .videoinfo{
-    max-width: 980px;
     border-radius: 15px;
+
     -webkit-box-shadow: 0px 0px 17px 10px rgb(0 0 0 / 23%);
     box-shadow: 0px 0px 17px 10px rgb(0 0 0 / 23%);
+
     display: flex;
     flex-direction: column;
     margin-top: 15px;
     padding: 10px;
+
+
 }
 
 .profile{
@@ -50,4 +56,9 @@
 
 .name{
     margin-left: 10px;
+}
+
+.reccomended{
+    justify-self: right;
+    max-width: 100%;
 }

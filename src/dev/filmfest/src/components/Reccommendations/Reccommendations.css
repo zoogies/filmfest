@@ -1,8 +1,18 @@
 .panel{
-    max-width: 100%;
-    margin: 10px;
-    margin-top: 0px;
+    margin: 0px;
+    margin-top: 20px;
+    margin-bottom: 20px;
     -webkit-box-shadow: 0px 0px 17px 10px rgb(0 0 0 / 23%);
     box-shadow: 0px 0px 17px 10px rgb(0 0 0 / 23%);
     border-radius: 15px;
+    float: right;
+}
+
+.similarText{
+    margin-left: 15px;
+    margin-bottom: 0px;
+}
+
+.reccomendedpanel{
+    margin-top: 0px;
 }
