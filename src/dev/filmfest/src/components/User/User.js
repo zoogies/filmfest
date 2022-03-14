@@ -25,10 +25,15 @@ export default function User(){
                     <div className="userName">
                         <p className="usernameText">Username</p>
                     </div>
+                    <div> 
+                        <p>This user is probably pretty cool and talks about that here in their bio.</p>
+                    </div>
                     <div className="userBadges">
                         <ProfileBadge type={"ma1"} text="media arts 1"/>
                         <ProfileBadge type={"ma2"} text="media arts 2"/>
                         <ProfileBadge type={"views"} text="20,143 views"/>
+                        <ProfileBadge type={"dev"} text="Developer"/>
+                        <ProfileBadge type={"ff"} text="Film Fest 2022"/>
                     </div>
                 </div>
             </div>

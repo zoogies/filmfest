@@ -5,8 +5,6 @@ export default function Profilehandler(){
         window.location.href = "http://localhost:3000/" + window.localStorage.getItem("gerdyuser");
     }
     else{
-        return(
-            <Signin/>
-        )
+        window.location.href = "http://localhost:3000/login";
     }
 }

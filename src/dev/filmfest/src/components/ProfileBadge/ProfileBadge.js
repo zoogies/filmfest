@@ -1,7 +1,8 @@
 import '../../resources/Shared.css'
 import './ProfileBadge.css'
-import {AiFillEye} from 'react-icons/ai';
+import {AiFillEye ,AiFillCode} from 'react-icons/ai';
 import {MdMovieFilter, MdMovie} from 'react-icons/md';
+import {BsFillCameraReelsFill} from 'react-icons/bs';
 
 export default function ProfileBadge(props){
     if(props.type === "ma1"){
@@ -38,6 +39,29 @@ export default function ProfileBadge(props){
             <div style={style} className="badge">
                 <div className='icon'>
                     <AiFillEye size={30}/>
+                </div>
+                <h3 className='badgetext'>{props.text}</h3>
+            </div>
+        )
+    }
+    else if(props.type === "dev"){
+        return(
+            <div className="badge dev">
+                <div className='icon'>
+                    <AiFillCode size={30}/>
+                </div>
+                <h3 className='badgetext'>{props.text}</h3>
+            </div>
+        )
+    }
+    else if(props.type === "ff"){
+        const style = {
+            backgroundColor : "#ff00cc"
+        }
+        return(
+            <div style={style} className="badge">
+                <div className='icon'>
+                    <BsFillCameraReelsFill size={30}/>
                 </div>
                 <h3 className='badgetext'>{props.text}</h3>
             </div>

@@ -1,11 +1,14 @@
 .badge{
     border-radius: 15px;
-    -webkit-box-shadow: 0px 0px 18px 8px rgb(0 0 0 / 23%);
-    box-shadow: 0px 0px 18px 8px rgb(0 0 0 / 23%);
+    -webkit-box-shadow: 0px 0px 18px 15px rgb(0 0 0 / 23%);
+    box-shadow: 0px 0px 18px 15px rgb(0 0 0 / 23%);
     margin: 10px;
     display: flex;
     flex-wrap: nowrap;
     align-items: center;
+    border:solid;
+    border-color: #000000;
+    border-width: 1px;
 }
 
 .badgetext {
@@ -16,3 +19,21 @@
 .icon{
     padding-left: 5px;
 }
+
+.dev{
+    background: linear-gradient(238deg, #fd8800, #fd008f, #9700fd, #003dfd, #05c7e6, #4bd58d);
+    background-size: 1200% 1200%;
+    -webkit-animation: rainbow 10s ease infinite;
+    animation: rainbow 10s ease infinite;
+}
+
+@-webkit-keyframes rainbow {
+    0% { background-position: 0% 50% }
+    50% { background-position: 100% 50% }
+    100% { background-position: 0% 50% }
+  }
+  @keyframes rainbow {
+    0% { background-position: 0% 50% }
+    50% { background-position: 100% 50% }
+    100% { background-position: 0% 50% }
+  }
