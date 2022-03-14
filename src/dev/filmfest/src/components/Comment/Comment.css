@@ -1,0 +1,37 @@
+.comment{
+    display: flex;
+    border-radius: 15px;
+    margin: 10px;
+    padding: 10px;
+    -webkit-box-shadow: 0px 0px 15px 4px rgb(0 0 0 / 23%);
+    box-shadow: 0px 0px 15px 4px rgb(0 0 0 / 23%);
+}
+
+.compfp{
+    width: 70px;
+    height: 70px;
+    overflow: hidden;
+    border-radius: 50%;
+    object-fit: cover;
+    flex: 0 0 auto;
+}
+
+.compfpimg{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.content{
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+}
+
+.username{
+    margin: 0px;   
+}
+
+.commentbody{
+    margin: 0px;
+}

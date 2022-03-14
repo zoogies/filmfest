@@ -7,6 +7,7 @@
     margin: 10px;
     display: flex;
     flex-wrap: wrap;
+    align-items: center;
     width: 100%;
     flex-direction: column;
     justify-content: center;
@@ -35,6 +36,12 @@
 .profile{
     display: flex;
     flex-direction: row;
+}
+
+.profilebtn{
+    display: flex;
+    padding: 10px;
+    border-radius: 15px;
 }
 
 .pfp{

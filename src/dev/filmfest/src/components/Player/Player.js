@@ -1,6 +1,7 @@
 import Comments from "../Comments/Comments"
 import Recommendations from "../Reccommendations/Reccommendations"
 import "./Player.css"
+import '../../resources/Shared.css'
 
 export default function Player(){
     const profile = "11298537";
@@ -15,8 +16,10 @@ export default function Player(){
                     <h1 className="title">Title!</h1>
                     <p className="views">View Counter</p>
                     <div className="profile" onClick={()=>{window.location.href = "http://localhost:3000/user/" + profile}}>
-                        <img className="pfp" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png"/>
-                        <h3 className="name">Name</h3>
+                        <div className=' level1 profilebtn'>
+                            <img className="pfp" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png"/>
+                            <h3 className="name">Name</h3>
+                        </div>
                     </div>
                 </div>
                 <div className="reccomended">
