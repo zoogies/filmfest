@@ -1,0 +1,18 @@
+.badge{
+    border-radius: 15px;
+    -webkit-box-shadow: 0px 0px 18px 8px rgb(0 0 0 / 23%);
+    box-shadow: 0px 0px 18px 8px rgb(0 0 0 / 23%);
+    margin: 10px;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+
+.badgetext {
+    padding: 10px;
+    margin: 0px;
+    padding-left: 4px;
+}
+.icon{
+    padding-left: 5px;
+}
