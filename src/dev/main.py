@@ -80,7 +80,7 @@ def login():
 
 @app.route("/refreshkey", methods=["POST"])
 def refreshkey():
-    if (request.json['key'] == query_db('SELECT accesstoken FROM users WHERE id="'+request.json['id']+'"')):
+    if (request.json['key'] == query_db('SELECT accesstoken FROM users WHERE id="'+request.json['id']+'"')[0][0]):
         key = secrets.token_hex(16)
         execute_db('update users set accesstoken="'+key+'" where id="'+request.json['id']+'"')
         epoch = int(time.time())
@@ -89,7 +89,7 @@ def refreshkey():
         execute_db('update users set tokenexpires="'+str(expiration)+'" where id="'+request.json['id']+'"')
         return json.dumps({"key":key,"expires":expiration})
     else:
-        return 'wrong'.headers.add("Access-Control-Allow-Origin", "*")
+        return 'wrong'
 
 @app.route("/pdata", methods=["POST"])
 def pdata():
