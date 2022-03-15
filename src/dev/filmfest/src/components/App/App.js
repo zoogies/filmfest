@@ -14,7 +14,6 @@ import {
   Route,
   Link
 } from "react-router-dom";
-import Profilehandler from '../Profilehandler/Profilehandler';
 import Signin from '../Signin/Signin';
 import Signup from '../Signup/Signup';
 
@@ -28,7 +27,6 @@ function App() {
         <Route path="/archive" element={<Archive/>}/>
         <Route path="/watch/:videoid" element={<Watch/>}/>
         <Route path="/user/:userid" element={<User/>}/>
-        <Route path="/profile" element={<Profilehandler/>}/>
         <Route path="/login" element={<Signin/>}/>
         <Route path="/signup" element={<Signup/>}/>
         <Route path="*" element={<Notfound/>}/>

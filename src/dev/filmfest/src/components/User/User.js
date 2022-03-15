@@ -3,6 +3,7 @@ import '../../resources/Shared.css'
 import './User.css'
 import Contentpanel from '../Contentpanel/Contentpanel'
 import ProfileBadge from "../ProfileBadge/ProfileBadge"
+import basicxhr from "../../resources/xhr"
 
 const data = [
     {"id":"69","author":"zoogs","title":"nose guy","thumbnail":"https://media.discordapp.net/attachments/682005199132688450/950756784174403624/IMG_7551.png"},
@@ -14,6 +15,20 @@ const data = [
 
 export default function User(){
     let {userid} = useParams();
+
+    basicxhr("pdata",{"profileid":userid,"userid":window.localStorage.getItem('gerdyid'),"userkey":window.localStorage.getItem('gerdykey')}).then(
+        function (response){
+            alert(response);
+            if(response == 'unauthorized'){
+                window.localStorage.clear();
+                window.location.href = "http://localhost:3000/login";
+            }
+            else if(response == 'notexist'){
+                alert('TODO this user does not exist') //TODO
+            }
+        }
+    );
+
     return(
         <>
         <div className="userPage">
