@@ -4,7 +4,7 @@ import './User.css'
 import Contentpanel from '../Contentpanel/Contentpanel'
 import ProfileBadge from "../ProfileBadge/ProfileBadge"
 import basicxhr from "../../resources/xhr"
-import { MdVerified } from "react-icons/md"
+import { MdVerified, MdShield } from "react-icons/md"
 import React from "react"
 
 const data = [
@@ -59,7 +59,15 @@ class RealUser extends React.Component{
                                 {(()=>{
                                     if(this.state.profiledata['priv'] === 'post' || this.state.profiledata['priv'] === 'admin'){
                                         return(
-                                            <MdVerified color="#03b6fc" size={45}/>
+                                            <MdVerified tooltip="verified" color="#03b6fc" size={45}/>
+                                        )
+                                    }
+                                })()}
+
+                                {(()=>{
+                                    if(this.state.profiledata['priv'] === 'admin'){
+                                        return(
+                                            <MdShield color="#ffbb00" size={40}/>
                                         )
                                     }
                                 })()}

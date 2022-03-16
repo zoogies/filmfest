@@ -7,6 +7,7 @@ import Redirect from "../Redirect/Redirect";
 import Watch from "../Watch/Watch";
 import Notfound from "../Notfound/Notfound";
 import User from "../User/User";
+import checkcreds from '../../resources/checkcreds';
 
 import {
   BrowserRouter as Router,
@@ -19,6 +20,7 @@ import Signup from '../Signup/Signup';
 import Edit from '../Edit/Edit';
 
 function App() {
+  checkcreds();
   return (
     <Router>
       <TitleBar/>

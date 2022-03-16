@@ -6,8 +6,14 @@ export default function Navbutton(props){
     return(
         <div onClick={() => {
             if(props.location === 'profile'){
-                checkcreds().then(function(response){
-                    window.location.href = "http://localhost:3000/user/" + window.localStorage.getItem('gerdyid');
+                checkcreds().then(function(){
+                    if(window.localStorage.getItem('gerdyid') !== null){
+                        window.location.href = "http://localhost:3000/user/" + window.localStorage.getItem('gerdyid');
+                    }
+                    else {
+                        window.localStorage.clear();
+                        window.location.href = "http://localhost:3000/login";
+                    }
                 })
             }
             else if(props.location === 'signout'){

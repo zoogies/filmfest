@@ -47,6 +47,18 @@ def query_db(query, args=(), one=False):
     except Exception as e:
         return e
 
+def authorized(paramID,paramKEY):
+    #get our users accesstoken and its expiry
+    data = query_db('SELECT accesstoken,tokenexpires FROM users WHERE id="'+paramID+'"')[0]
+    #if our access token matches the token passed with the request
+    if(paramKEY == data[0]):
+        #if token expiry data is still in the future
+        if(int(data[1]) > int(time.time())):
+           return True #user is authorized
+        else:
+            return False #user is not authorized
+    else:
+        return False #user is not authorized
 
 # Serve React App
 @app.route('/', defaults={'path': ''})
@@ -87,7 +99,7 @@ def login():
 
 @app.route("/refreshkey", methods=["POST"])
 def refreshkey():
-    if (request.json['key'] == query_db('SELECT accesstoken FROM users WHERE id="'+request.json['id']+'"')[0][0]):
+    if (authorized(request.json['id'],request.json['key'])):
         key = secrets.token_hex(16)
         execute_db('update users set accesstoken="'+key+'" where id="'+request.json['id']+'"')
         epoch = int(time.time())
@@ -100,7 +112,6 @@ def refreshkey():
 
 @app.route("/pdata", methods=["POST"])
 def pdata():
-    #TODO OPTIONAL COULD CHECK TOKEN EXPIRY WITH SERVER CACHED EXPIRY FOR ADDED SECURITY
     #starting data
     data = {
             "name":"",
@@ -135,17 +146,12 @@ def pdata():
                 if((request.json['userid'] == None and request.json['userkey'] != None) or (request.json['userid'] != None and request.json['userkey'] == None)):
                     return 'broken'
                 else:
-                    #authentication not broken
-                    #get accesstoken cached for our userid
-                    cached = query_db('select accesstoken from users where id="'+request.json['userid']+'"')[0][0]
-                    provided = request.json['userkey']
-                    #check if our access token for this user is what the server has cached for this user
-                    if(cached != provided):
-                        return 'unauthorized'
-                    else: #if authorized
+                    #authenticate the user
+                    if(authorized(request.json['userid'],request.json['userkey'])):
                         data.update(owned="true")
                         return json.dumps(data)
-                        #return our data proving this is the owned users profile
+                    else: #if not authorized
+                        return 'unauthorized'
 
     else:
         return 'notexist'
