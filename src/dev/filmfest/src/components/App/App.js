@@ -16,6 +16,7 @@ import {
 } from "react-router-dom";
 import Signin from '../Signin/Signin';
 import Signup from '../Signup/Signup';
+import Edit from '../Edit/Edit';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         <Route path="/archive" element={<Archive/>}/>
         <Route path="/watch/:videoid" element={<Watch/>}/>
         <Route path="/user/:userid" element={<User/>}/>
+        <Route path="/user/:userid/edit" element={<Edit/>}/>
         <Route path="/login" element={<Signin/>}/>
         <Route path="/signup" element={<Signup/>}/>
         <Route path="*" element={<Notfound/>}/>

@@ -44,20 +44,20 @@ class RealUser extends React.Component{
     }
 
     render() {
-        if(this.state.profiledata != null && this.state.profiledata != 'notexist'){
+        if(this.state.profiledata !== null && this.state.profiledata !== 'notexist'){
             return(
                 <>
                 <div className="userPage">
                     <div className="userHeader level2">
                         <div className="userImage">
-                            <img className='imageAttr' src='https://i.pinimg.com/originals/d8/5a/81/d85a810820b7ba00122476110223de70.jpg'/>
+                            <img className='imageAttr' alt="" src='https://i.pinimg.com/originals/d8/5a/81/d85a810820b7ba00122476110223de70.jpg'/>
                         </div>
                         <div className="userInfo">
                             <div className="userName">
                                 <p className="usernameText">{this.state.profiledata['name']}</p>
 
                                 {(()=>{
-                                    if(this.state.profiledata['priv'] == 'post' || this.state.profiledata['priv'] == 'admin'){
+                                    if(this.state.profiledata['priv'] === 'post' || this.state.profiledata['priv'] === 'admin'){
                                         return(
                                             <MdVerified color="#03b6fc" size={45}/>
                                         )
@@ -70,7 +70,7 @@ class RealUser extends React.Component{
                             </div>
 
                             {(()=>{
-                                if(this.state.profiledata['owned'] == 'true'){
+                                if(this.state.profiledata['owned'] === 'true'){
                                     return(
                                         <ProfileBadge key='edit' type='edit'/>
                                     )

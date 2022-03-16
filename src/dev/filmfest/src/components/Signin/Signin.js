@@ -23,6 +23,9 @@ export default function Signin(){
                             if(response === 'wrong'){
                                 alert('Wrong Password'); //todo placeholder
                             }
+                            else if(response === 'banned'){
+                                alert('This account is banned.')
+                            }
                             else{
                                 const key = JSON.parse(response)['key']
                                 const expires = JSON.parse(response)['expires']

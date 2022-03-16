@@ -25,16 +25,16 @@ export default function Signup(){
                     const pass = document.getElementById('pass').value;
                     const vpass = document.getElementById('vpass').value;
 
-                    if(email == ''){
+                    if(email === ''){
                         alert('Email address is required.')
                     }
-                    else if(email != '' && !(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email))) {
+                    else if(email !== '' && !(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email))) {
                         alert('Email address is invalid.');
                     }
-                    else if(first == '' || first == ' ' || last == '' || last == ' '){
+                    else if(first === '' || first === ' ' || last === '' || last === ' '){
                         alert('First and last name are required.')
                     }
-                    else if(pass != vpass){
+                    else if(pass !== vpass){
                         alert('Passwords do not match.');
                     }
                     else{
@@ -44,10 +44,10 @@ export default function Signup(){
                             "last":last,
                             "password":pass,
                         }).then(function(response){
-                            if(response == 'taken'){
+                            if(response === 'taken'){
                                 alert("This email address is taken.");
                             }
-                            else if(response=='created'){
+                            else if(response==='created'){
                                 window.localStorage.clear();
                                 window.location.href = "http://localhost:3000/login";
                             }

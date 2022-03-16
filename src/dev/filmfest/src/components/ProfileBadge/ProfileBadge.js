@@ -69,7 +69,10 @@ export default function ProfileBadge(props){
     }
     else if(props.type === "edit"){
         return(
-            <div className="level1 editbtn">
+            <div onClick={()=>{
+                window.location.href += "/edit";
+            }
+            } className="level1 editbtn">
                 <div className='icon'>
                     <MdEdit size={30}/>
                 </div>
