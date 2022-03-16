@@ -4,6 +4,7 @@ import './User.css'
 import Contentpanel from '../Contentpanel/Contentpanel'
 import ProfileBadge from "../ProfileBadge/ProfileBadge"
 import basicxhr from "../../resources/xhr"
+import { MdVerified } from "react-icons/md"
 import React from "react"
 
 const data = [
@@ -54,10 +55,28 @@ class RealUser extends React.Component{
                         <div className="userInfo">
                             <div className="userName">
                                 <p className="usernameText">{this.state.profiledata['name']}</p>
+
+                                {(()=>{
+                                    if(this.state.profiledata['priv'] == 'post' || this.state.profiledata['priv'] == 'admin'){
+                                        return(
+                                            <MdVerified color="#03b6fc" size={45}/>
+                                        )
+                                    }
+                                })()}
+                                
                             </div>
                             <div> 
                                 <p>{this.state.profiledata['bio']}</p>
                             </div>
+
+                            {(()=>{
+                                if(this.state.profiledata['owned'] == 'true'){
+                                    return(
+                                        <ProfileBadge key='edit' type='edit'/>
+                                    )
+                                }
+                            })()}
+
                             <div className="userBadges">
                                 {
                                     this.state.profiledata['badges'].split("_").map(function(type){
@@ -66,6 +85,7 @@ class RealUser extends React.Component{
                                 }
                             </div>
                         </div>
+
                     </div>
                 </div>
                 <div className="profileVideoContent">

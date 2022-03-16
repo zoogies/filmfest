@@ -1,7 +1,7 @@
 import '../../resources/Shared.css'
 import './ProfileBadge.css'
 import {AiFillEye ,AiFillCode} from 'react-icons/ai';
-import {MdMovieFilter, MdMovie} from 'react-icons/md';
+import {MdMovieFilter, MdMovie, MdEdit} from 'react-icons/md';
 import {BsFillCameraReelsFill} from 'react-icons/bs';
 
 export default function ProfileBadge(props){
@@ -64,6 +64,16 @@ export default function ProfileBadge(props){
                     <BsFillCameraReelsFill size={30}/>
                 </div>
                 <h3 className='badgetext'>Film Festival</h3>
+            </div>
+        )
+    }
+    else if(props.type === "edit"){
+        return(
+            <div className="level1 editbtn">
+                <div className='icon'>
+                    <MdEdit size={30}/>
+                </div>
+                <h3 className='badgetext'>Edit Profile</h3>
             </div>
         )
     }

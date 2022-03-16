@@ -106,16 +106,18 @@ def pdata():
             "name":"",
             "bio":"",
             "badges":"",
-            "owned":"false" #THIS PART NEEDS CHECKED
+            "owned":"false",
+            "priv":""
             #profile picture here eventually
     }
     #query for data
-    profiledata = query_db('select distinct first,last,bio,badges from users where id="'+request.json['profileid']+'"')
+    profiledata = query_db('select distinct first,last,bio,badges,priv from users where id="'+request.json['profileid']+'"')
     if(len(profiledata) > 0): #check if exists
         #update keys if its does
         data.update(name=str(profiledata[0][0] + " " + profiledata[0][1]))
         data.update(bio=str(profiledata[0][2]))
         data.update(badges=str(profiledata[0][3]))
+        data.update(priv=str(profiledata[0][4]))
 
         #user is not authenticated
         if(request.json['userid'] == None or request.json['userkey'] == None):
