@@ -60,8 +60,15 @@ def serve(path):
 
 @app.route('/signup', methods=["POST"])
 def signup():
-    print(query_db('SELECT FROM users WHERE email='+request.json['email']))
-    return "success", 200
+    try:
+        if(query_db('SELECT * FROM users WHERE email="'+request.json['email']+'"') != []):
+            return 'taken'
+        else:
+            execute_db('INSERT INTO users (first,last,email,password,bio,badges,priv) VALUES ("'+request.json['first']+'","'+request.json['last']+'","'+request.json['email']+'","'+(hashlib.sha256(request.json['password'].encode('utf-8')).hexdigest())+'","","","comment")')
+            return 'created'
+    except Exception as e:
+        print(e)
+        return 'error'
 
 @app.route("/login", methods=["POST"])
 def login():
