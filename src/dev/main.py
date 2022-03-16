@@ -93,30 +93,59 @@ def refreshkey():
 
 @app.route("/pdata", methods=["POST"])
 def pdata():
-
-
-
-
-    #TODO CHECK RIGHT HERE THAT THE USERID MATCHES THE ONE SENT BY THE KEY OR ELSE IT COULD BE CHANGED
-    cached = query_db('select accesstoken from users where id="'+request.json['userid']+'"')[0][0]
-    provided = request.json['userkey']
-    print(cached,provided)
-    if(cached != provided):
-        return 'unauthorized'
-    
-    
-    profiledata = query_db('select distinct first,last,bio,badges from users where id="'+request.json['profileid']+'"')
-    print(profiledata)
-    if(len(profiledata) > 0):
-        return json.dumps({
-            "name":str(profiledata[0][0] + " " + profiledata[0][1]),
-            "bio":str(profiledata[0][2]),
-            "badges":str(profiledata[0][3]),
-            "owned":"true" #THIS PART NEEDS CHECKED
+    #TODO OPTIONAL COULD CHECK TOKEN EXPIRY WITH SERVER CACHED EXPIRY FOR ADDED SECURITY
+    #starting data
+    data = {
+            "name":"",
+            "bio":"",
+            "badges":"",
+            "owned":"false" #THIS PART NEEDS CHECKED
             #profile picture here eventually
-        })
+    }
+    #query for data
+    profiledata = query_db('select distinct first,last,bio,badges from users where id="'+request.json['profileid']+'"')
+    if(len(profiledata) > 0): #check if exists
+        #update keys if its does
+        data.update(name=str(profiledata[0][0] + " " + profiledata[0][1]))
+        data.update(bio=str(profiledata[0][2]))
+        data.update(badges=str(profiledata[0][3]))
+
+        #user is not authenticated
+        if(request.json['userid'] == None or request.json['userkey'] == None):
+                #return normal data telling them its not them
+                return json.dumps(data)
+        #user has given us some form of authentication
+        else:
+            #check if user is claiming this is them
+            if(request.json['userid'] != request.json['profileid']):
+                #they arent so just give them the data with owned=false
+                return json.dumps(data)
+            else: #user is claiming this is them
+                #check for broken authentication
+                #TODO THIS IS UNREACHABLE BEACUSE OF FIRST RETURN CHECK LOW PRIO
+                if((request.json['userid'] == None and request.json['userkey'] != None) or (request.json['userid'] != None and request.json['userkey'] == None)):
+                    return 'broken'
+                else:
+                    #authentication not broken
+                    #get accesstoken cached for our userid
+                    cached = query_db('select accesstoken from users where id="'+request.json['userid']+'"')[0][0]
+                    provided = request.json['userkey']
+                    #check if our access token for this user is what the server has cached for this user
+                    if(cached != provided):
+                        return 'unauthorized'
+                    else: #if authorized
+                        data.update(owned="true")
+                        return json.dumps(data)
+                        #return our data proving this is the owned users profile
+
     else:
         return 'notexist'
+    
+    
+    
+
+    
+    
 
 if __name__ == '__main__':
     app.run(host='127.0.0.1', use_reloader=True, port=5000, threaded=True, debug=True)

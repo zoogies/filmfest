@@ -4,6 +4,7 @@ import './User.css'
 import Contentpanel from '../Contentpanel/Contentpanel'
 import ProfileBadge from "../ProfileBadge/ProfileBadge"
 import basicxhr from "../../resources/xhr"
+import React from "react"
 
 const data = [
     {"id":"69","author":"zoogs","title":"nose guy","thumbnail":"https://media.discordapp.net/attachments/682005199132688450/950756784174403624/IMG_7551.png"},
@@ -13,49 +14,78 @@ const data = [
     {"id":"3","author":"c","title":"3dffhgghfghgfhfghfghfghfghfghfghfghfghfghfghgf","thumbnail":"https://media.istockphoto.com/photos/picturesque-morning-in-plitvice-national-park-colorful-spring-scene-picture-id1093110112?k=20&m=1093110112&s=612x612&w=0&h=3OhKOpvzOSJgwThQmGhshfOnZTvMExZX2R91jNNStBY="},
 ]
 
-export default function User(){
-    let {userid} = useParams();
 
-    basicxhr("pdata",{"profileid":userid,"userid":window.localStorage.getItem('gerdyid'),"userkey":window.localStorage.getItem('gerdykey')}).then(
-        function (response){
-            alert(response);
-            if(response == 'unauthorized'){
-                window.localStorage.clear();
-                window.location.href = "http://localhost:3000/login";
-            }
-            else if(response == 'notexist'){
-                alert('TODO this user does not exist') //TODO
-            }
+class RealUser extends React.Component{
+    constructor(props){
+        super(props);
+        this.state = {
+            userid: props.uid,
+            profiledata: null,
         }
-    );
+    }
+    
+    componentDidMount(){
+        basicxhr("pdata",{"profileid":this.state.userid,"userid":window.localStorage.getItem('gerdyid'),"userkey":window.localStorage.getItem('gerdykey')}).then(
+            (response) => {
+                //alert(typeof JSON.parse(response))
+                if(response === 'unauthorized'){
+                    window.localStorage.clear();
+                    window.location.href = "http://localhost:3000/login";
+                }
+                else if(response === 'notexist'){
+                    this.setState({ profiledata: "notexist" });
+                }
+                else{
+                    this.setState({ profiledata: JSON.parse(response) });
+                }
+            }
+        );
+    }
 
-    return(
-        <>
-        <div className="userPage">
-            <div className="userHeader level2">
-                <div className="userImage">
-                    <img className='imageAttr' src='https://i.pinimg.com/originals/d8/5a/81/d85a810820b7ba00122476110223de70.jpg'/>
+    render() {
+        if(this.state.profiledata != null && this.state.profiledata != 'notexist'){
+            return(
+                <>
+                <div className="userPage">
+                    <div className="userHeader level2">
+                        <div className="userImage">
+                            <img className='imageAttr' src='https://i.pinimg.com/originals/d8/5a/81/d85a810820b7ba00122476110223de70.jpg'/>
+                        </div>
+                        <div className="userInfo">
+                            <div className="userName">
+                                <p className="usernameText">{this.state.profiledata['name']}</p>
+                            </div>
+                            <div> 
+                                <p>{this.state.profiledata['bio']}</p>
+                            </div>
+                            <div className="userBadges">
+                                {
+                                    this.state.profiledata['badges'].split("_").map(function(type){
+                                        return <ProfileBadge key={type} type={type} />
+                                    })
+                                }
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div className="userInfo">
-                    <div className="userName">
-                        <p className="usernameText">Username</p>
-                    </div>
-                    <div> 
-                        <p>This user is probably pretty cool and talks about that here in their bio.</p>
-                    </div>
-                    <div className="userBadges">
-                        <ProfileBadge type={"ma1"} text="media arts 1"/>
-                        <ProfileBadge type={"ma2"} text="media arts 2"/>
-                        <ProfileBadge type={"views"} text="20,143 views"/>
-                        <ProfileBadge type={"dev"} text="Developer"/>
-                        <ProfileBadge type={"ff"} text="Film Fest 2022"/>
-                    </div>
+                <div className="profileVideoContent">
+                    <Contentpanel content={data}/>
                 </div>
-            </div>
-        </div>
-        <div className="profileVideoContent">
-            <Contentpanel content={data}/>
-        </div>
-        </>
-    )
+                </>
+            )
+
+        }
+        else if(this.state.profiledata === 'notexist'){
+            return <h1>This user does not exist</h1> //TODO THIS NEEDS DESIGNED
+        }
+        else{
+            return <p>Loading...</p> //TODO UPDATE THIS LOADING ICON REALLL!!!
+        }
+    }
+}
+
+export default function User(){
+    const {userid} = useParams();
+
+    return <RealUser uid={userid} />
 }

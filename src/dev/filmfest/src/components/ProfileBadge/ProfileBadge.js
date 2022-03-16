@@ -14,7 +14,7 @@ export default function ProfileBadge(props){
                 <div className='icon'>
                     <MdMovie size={30}/>
                 </div>
-                <h3 className='badgetext'>{props.text}</h3>
+                <h3 className='badgetext'>Media Arts 1</h3>
             </div>
         )
     }
@@ -27,7 +27,7 @@ export default function ProfileBadge(props){
                 <div className='icon'>
                     <MdMovieFilter size={30}/>
                 </div>
-                <h3 className='badgetext'>{props.text}</h3>
+                <h3 className='badgetext'>Media Arts 2</h3>
             </div>
         )
     }
@@ -50,7 +50,7 @@ export default function ProfileBadge(props){
                 <div className='icon'>
                     <AiFillCode size={30}/>
                 </div>
-                <h3 className='badgetext'>{props.text}</h3>
+                <h3 className='badgetext'>Developer</h3>
             </div>
         )
     }
@@ -63,7 +63,7 @@ export default function ProfileBadge(props){
                 <div className='icon'>
                     <BsFillCameraReelsFill size={30}/>
                 </div>
-                <h3 className='badgetext'>{props.text}</h3>
+                <h3 className='badgetext'>Film Festival</h3>
             </div>
         )
     }
