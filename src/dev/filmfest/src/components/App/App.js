@@ -18,6 +18,7 @@ import {
 import Signin from '../Signin/Signin';
 import Signup from '../Signup/Signup';
 import Edit from '../Edit/Edit';
+import Admin from '../Admin/Admin';
 
 function App() {
   checkcreds();
@@ -33,6 +34,7 @@ function App() {
         <Route path="/user/:userid/edit" element={<Edit/>}/>
         <Route path="/login" element={<Signin/>}/>
         <Route path="/signup" element={<Signup/>}/>
+        <Route path="/admin" element={<Admin/>}/>
         <Route path="*" element={<Notfound/>}/>
       </Routes>
     </Router>

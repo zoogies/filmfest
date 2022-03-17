@@ -5,6 +5,7 @@ import Contentpanel from '../Contentpanel/Contentpanel'
 import ProfileBadge from "../ProfileBadge/ProfileBadge"
 import basicxhr from "../../resources/xhr"
 import { MdVerified, MdShield } from "react-icons/md"
+import { CgTerminal } from "react-icons/cg";
 import React from "react"
 
 const data = [
@@ -57,7 +58,7 @@ class RealUser extends React.Component{
                                 <p className="usernameText">{this.state.profiledata['name']}</p>
 
                                 {(()=>{
-                                    if(this.state.profiledata['priv'] === 'post' || this.state.profiledata['priv'] === 'admin'){
+                                    if(this.state.profiledata['priv'] === 'post' || this.state.profiledata['priv'] === 'admin' || this.state.profiledata['priv'] === 'dev'){
                                         return(
                                             <MdVerified tooltip="verified" color="#03b6fc" size={45}/>
                                         )
@@ -65,13 +66,21 @@ class RealUser extends React.Component{
                                 })()}
 
                                 {(()=>{
-                                    if(this.state.profiledata['priv'] === 'admin'){
+                                    if(this.state.profiledata['priv'] === 'admin' || this.state.profiledata['priv'] === 'dev'){
                                         return(
                                             <MdShield color="#ffbb00" size={40}/>
                                         )
                                     }
                                 })()}
                                 
+                                {(()=>{
+                                    if(this.state.profiledata['priv'] === 'dev'){
+                                        return(
+                                            <CgTerminal color="#11ff00" size={40}/>
+                                        )
+                                    }
+                                })()}
+
                             </div>
                             <div> 
                                 <p>{this.state.profiledata['bio']}</p>

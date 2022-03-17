@@ -15,6 +15,11 @@ export default function TitleBar(){
                 <Navbutton text="Profile" location={"profile"}/>
                 <Navbutton text="Film Fest Archive" location="archive"/>
                 {(()=>{
+                    if(window.localStorage.getItem('gerdypriv') === 'admin' || window.localStorage.getItem('gerdypriv') === 'dev'){
+                        return <Navbutton text="Admin" location="admin"/>
+                    }
+                })()}
+                {(()=>{
                     if(window.localStorage.getItem('gerdykey') === null || window.localStorage.getItem('gerdyid') === null || window.localStorage.getItem('gerdyexpires') === null){
                         return <Navbutton text="Sign In" location="login"/>
                     }

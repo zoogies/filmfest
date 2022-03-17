@@ -93,7 +93,10 @@ def login():
         expireamount = 86400 #expire time
         expiration = epoch + expireamount
         execute_db('update users set tokenexpires="'+str(expiration)+'" where email="'+request.json['email']+'"')
-        return json.dumps({"key":key,"expires":expiration,"id":str(query_db('select id from users where email="'+request.json['email']+'"')[0][0])})
+        
+        data = query_db('select id,priv from users where email="'+request.json['email']+'"')[0]
+        
+        return json.dumps({"key":key,"expires":expiration,"id":str(data[0]),"priv":str(data[1])})
     else:
         return 'wrong'
 
@@ -152,15 +155,28 @@ def pdata():
                         return json.dumps(data)
                     else: #if not authorized
                         return 'unauthorized'
-
     else:
         return 'notexist'
-    
-    
-    
 
-    
-    
+@app.route('/admin')
+def admin():
+    priv = query_db('select priv from users where id='+request.json['id'])[0][0]
+    if(authorized(request.json['id'], request.json['key']) and (priv == 'admin' or priv == 'dev')):
+        if(request.json["action"] == 'ban'):
+            execute_db('update users set priv="banned" where id="'+request.json['actionid']+'"')
+            return "success"
+    else:
+        return "unauthorized"
+
+@app.route("/userlist", methods=["POST"])
+def userlist(): #THIS WILL NEED REDONE FOR SEARCH TERMS AND OTHER BS AND WHETHER OR NOT ADMIN IS CALLING IT POSSIBLY ADMIN CHANGES ONLY ON CLIENTSIDE
+    #IF USER ASKING IS ADMIN SEND THEIR PRIV BACK WITH THEM AS VERIFICATION
+    priv = query_db('select priv from users where id='+request.json['id'])[0][0]
+    if(authorized(request.json['id'], request.json['key']) and (priv == 'admin' or priv == 'dev')):
+        return json.dumps(query_db('select id,first,last,priv from users')) #TODO THIS NEEDS PAGIZATION
+    else:
+        return 'unauthorized'
+
 
 if __name__ == '__main__':
     app.run(host='127.0.0.1', use_reloader=True, port=5000, threaded=True, debug=True)

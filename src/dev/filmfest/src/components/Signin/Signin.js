@@ -30,9 +30,11 @@ export default function Signin(){
                                 const key = JSON.parse(response)['key']
                                 const expires = JSON.parse(response)['expires']
                                 const id = JSON.parse(response)['id']
+                                const priv = JSON.parse(response)['priv']
                                 window.localStorage.setItem('gerdykey',key);
                                 window.localStorage.setItem('gerdyexpires',expires);
                                 window.localStorage.setItem('gerdyid',id);
+                                window.localStorage.setItem('gerdypriv',priv);
                                 window.location.href = "http://localhost:3000/recent";
                             }
                         }

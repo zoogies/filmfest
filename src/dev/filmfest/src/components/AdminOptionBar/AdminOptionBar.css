@@ -1,0 +1,25 @@
+.adminOptionBar{
+    -webkit-box-shadow: 0px 0px 17px 10px rgb(0 0 0 / 23%);
+    box-shadow: 0px 0px 17px 10px rgb(0 0 0 / 23%);
+
+    max-width: 1000px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    border-radius: 15px;
+    padding: 5px;
+    
+}
+
+.adminOption {
+    margin: 5px;
+    border-radius: 15px;
+    -webkit-box-shadow: 0px 0px 17px 3px rgb(0 0 0 / 23%);
+    box-shadow: 0px 0px 17px 3px rgb(0 0 0 / 23%);
+}
+
+.adminOption > h2 {
+    padding: 10px;
+}

@@ -1,0 +1,22 @@
+.adminContainer{
+    width: 100%;
+    max-width: 1000px;
+    display: flex;
+    align-self: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 30px;
+    margin-bottom: 0px;
+}
+
+.admintop{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.adminpaneltitle{
+    align-self: center;
+    font-size: 30px;
+    text-align: center;
+}
