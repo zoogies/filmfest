@@ -11,7 +11,7 @@ export default function TitleBar(){
             </div>
             <h1 id='TitleBarText'>Film Fest</h1>
             <div className='navholder'>
-                <Navbutton text="Recent" location="recent"/>
+                <Navbutton text="Browse" location="browse"/>
                 <Navbutton text="Profile" location={"profile"}/>
                 <Navbutton text="Film Fest Archive" location="archive"/>
                 {(()=>{

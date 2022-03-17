@@ -1,4 +1,4 @@
-import Profile from "../Profile/Profile"
+import Profile from "../MiniProfileAdmin/MiniProfileAdmin"
 import './ProfileCollection.css'
 
 export default function ProfileCollection(props){

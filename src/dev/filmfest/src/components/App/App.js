@@ -18,7 +18,7 @@ import {
 import Signin from '../Signin/Signin';
 import Signup from '../Signup/Signup';
 import Edit from '../Edit/Edit';
-import Admin from '../Admin/Admin';
+import AdminPanel from '../AdminPanel/AdminPanel';
 
 function App() {
   checkcreds();
@@ -27,14 +27,14 @@ function App() {
       <TitleBar/>
       <Routes>
         <Route path="/" element={<Redirect/>}/>
-        <Route path="/recent" element={<Home/>}/>
+        <Route path="/browse" element={<Home/>}/>
         <Route path="/archive" element={<Archive/>}/>
         <Route path="/watch/:videoid" element={<Watch/>}/>
         <Route path="/user/:userid" element={<User/>}/>
         <Route path="/user/:userid/edit" element={<Edit/>}/>
         <Route path="/login" element={<Signin/>}/>
         <Route path="/signup" element={<Signup/>}/>
-        <Route path="/admin" element={<Admin/>}/>
+        <Route path="/admin" element={<AdminPanel/>}/>
         <Route path="*" element={<Notfound/>}/>
       </Routes>
     </Router>

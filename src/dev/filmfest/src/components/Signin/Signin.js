@@ -35,7 +35,7 @@ export default function Signin(){
                                 window.localStorage.setItem('gerdyexpires',expires);
                                 window.localStorage.setItem('gerdyid',id);
                                 window.localStorage.setItem('gerdypriv',priv);
-                                window.location.href = "http://localhost:3000/recent";
+                                window.location.href = "http://localhost:3000/browse";
                             }
                         }
                     )

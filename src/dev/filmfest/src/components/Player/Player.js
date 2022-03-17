@@ -2,9 +2,9 @@ import Comments from "../Comments/Comments"
 import Recommendations from "../Reccommendations/Reccommendations"
 import "./Player.css"
 import '../../resources/Shared.css'
+import MiniProfile from "../MiniProfile/MiniProfile"
 
 export default function Player(){
-    const profile = "11298537";
     return(
         <div className="player">
             <div className="videoandtitle">
@@ -15,12 +15,7 @@ export default function Player(){
                 <div className="videoinfo level2">
                     <h1 className="title">Title!</h1>
                     <p className="views">View Counter</p>
-                    <div className="profile" onClick={()=>{window.location.href = "http://localhost:3000/user/" + profile}}>
-                        <div className=' level1 profilebtn'>
-                            <img className="pfp" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png"/>
-                            <h3 className="name">Name</h3>
-                        </div>
-                    </div>
+                    <MiniProfile data={[1,"ryan","zmuda","dev"]}/>
                 </div>
                 <div className="reccomended">
                     <Recommendations/>

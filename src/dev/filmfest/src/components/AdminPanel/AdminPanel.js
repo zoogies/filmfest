@@ -1,11 +1,11 @@
 import React from "react";
 import ProfileCollection from "../ProfileCollection/ProfileCollection";
 import basicxhr from "../../resources/xhr"
-import AdminOptionBar from "../AdminOptionBar/AdminOptionBar";
 import './Admin.css'
+import './AdminOptionBar.css'
 import GenericOptionBar from "../GenericOptionBar/GenericOptionBar";
 
-export default class Admin extends React.Component{
+export default class AdminPanel extends React.Component{
 
     constructor(props){
         super(props);
@@ -14,6 +14,7 @@ export default class Admin extends React.Component{
             users: null,
         }
         this.pagechanger = this.pagechanger.bind(this);
+        this.banselected = this.banselected.bind(this);
     }
 
     componentDidMount(){
@@ -45,6 +46,10 @@ export default class Admin extends React.Component{
         });
     }
 
+    banselected(){
+        alert(document.getElementById('check').value)
+    }
+
     render(){
 
         if(this.state.page === 'usersready' ){
@@ -54,12 +59,18 @@ export default class Admin extends React.Component{
                     <h1>ADMIN PANEL</h1>
                 </div>
                 <div className="adminContainer">
-                    <AdminOptionBar changePage={this.pagechanger}/>
+                    <GenericOptionBar content={[
+                        {"text":"users","call":()=>{this.pagechanger('users')}},
+                        {"text":"videos","call":()=>{this.pagechanger('videos')}},
+                        {"text":"classes","call":()=>{this.pagechanger('classes')}},
+                        {"text":"projects","call":()=>{this.pagechanger('projects')}},
+                    ]}
+                    />
                 </div>
 
                 <div className="adminContainer">
                     <GenericOptionBar content={[
-                        {"text":"ban selected","call":()=>{alert()}},
+                        {"text":"ban selected","call":()=>{this.banselected()}},
                         {"text":"verify selected","call":()=>{alert()}},
                         {"text":"promote selected","call":()=>{alert()}},
                         {"text":"demote selected","call":()=>{alert()}},
@@ -80,7 +91,13 @@ export default class Admin extends React.Component{
                         <h1>ADMIN PANEL</h1>
                     </div>
                     <div className="adminContainer">
-                        <AdminOptionBar changePage={this.pagechanger}/>
+                        <GenericOptionBar content={[
+                            {"text":"users","call":()=>{this.pagechanger('users')}},
+                            {"text":"videos","call":()=>{this.pagechanger('videos')}},
+                            {"text":"classes","call":()=>{this.pagechanger('classes')}},
+                            {"text":"projects","call":()=>{this.pagechanger('projects')}},
+                        ]}
+                        />
                     </div>
                 </div>
             )
