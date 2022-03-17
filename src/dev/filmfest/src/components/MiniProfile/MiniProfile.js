@@ -9,7 +9,15 @@ export default function MiniProfile(props){
                 window.location.href = "http://localhost:3000/user/"+props.data[0];
             }}>
             <div className='circle'>
-                <img className='profilePreviewSmall' alt="" src="https://i.pinimg.com/originals/d8/5a/81/d85a810820b7ba00122476110223de70.jpg"/>
+                {(()=>{
+                    if(props.data[4] == null){
+                        return <img className='profilePreviewSmall' alt="" src={"http://127.0.0.1:5000/users/defualt/pfp.jpeg"}/>
+                    }
+                    else{
+                        return <img className='profilePreviewSmall' alt="" src={"http://127.0.0.1:5000/users/"+props.data[0]+"/pfp."+props.data[4]}/>
+                    }
+                })()}
+
             </div>
             <div className='userline'>
                 <h2>{props.data[1] + ' ' +props.data[2]}</h2>

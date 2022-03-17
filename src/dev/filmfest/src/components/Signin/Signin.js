@@ -12,6 +12,7 @@ export default function Signin(){
                 <input className='level1' id="email" type="email"/>
                 <h3>Password:</h3>
                 <input className='level1' id="password" type="password"/>
+                <a href='' className='forgortext'>I forgot my password</a>
                 <button onClick={()=>{
                     //check data
                     const email = document.getElementById("email").value;

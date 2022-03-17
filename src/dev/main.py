@@ -8,7 +8,7 @@ import time
 from flask_cors import CORS
 from datetime import datetime, timedelta, timezone
 
-app = Flask(__name__, static_folder='filmfest/build')
+app = Flask(__name__, static_folder='filmfest/server')
 
 # global variables
 DATABASE = "gerdy.db"
@@ -64,7 +64,6 @@ def authorized(paramID,paramKEY):
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def serve(path):
-    print('attempt')
     if path != "" and os.path.exists(app.static_folder + '/' + path):
         return send_from_directory(app.static_folder, path)
     else:
@@ -121,17 +120,24 @@ def pdata():
             "bio":"",
             "badges":"",
             "owned":"false",
-            "priv":""
+            "priv":"",
+            "pfp":""
             #profile picture here eventually
     }
     #query for data
-    profiledata = query_db('select distinct first,last,bio,badges,priv from users where id="'+request.json['profileid']+'"')
+    profiledata = query_db('select distinct first,last,bio,badges,priv,pfp from users where id="'+request.json['profileid']+'"')
     if(len(profiledata) > 0): #check if exists
         #update keys if its does
-        data.update(name=str(profiledata[0][0] + " " + profiledata[0][1]))
+        data.update(first=str(profiledata[0][0]))
+        data.update(last=str(profiledata[0][1]))
         data.update(bio=str(profiledata[0][2]))
         data.update(badges=str(profiledata[0][3]))
         data.update(priv=str(profiledata[0][4]))
+
+        if(profiledata[0][5] == None):
+            data.update(pfp="http://127.0.0.1:5000/users/defualt/pfp.jpeg")
+        else:
+            data.update(pfp="http://127.0.0.1:5000/users/"+request.json['profileid']+"/pfp."+str(profiledata[0][5]))
 
         #user is not authenticated
         if(request.json['userid'] == None or request.json['userkey'] == None):
@@ -173,7 +179,7 @@ def userlist(): #THIS WILL NEED REDONE FOR SEARCH TERMS AND OTHER BS AND WHETHER
     #IF USER ASKING IS ADMIN SEND THEIR PRIV BACK WITH THEM AS VERIFICATION
     priv = query_db('select priv from users where id='+request.json['id'])[0][0]
     if(authorized(request.json['id'], request.json['key']) and (priv == 'admin' or priv == 'dev')):
-        return json.dumps(query_db('select id,first,last,priv from users')) #TODO THIS NEEDS PAGIZATION
+        return json.dumps(query_db('select id,first,last,priv,pfp from users')) #TODO THIS NEEDS PAGIZATION
     else:
         return 'unauthorized'
 

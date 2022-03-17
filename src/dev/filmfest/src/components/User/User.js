@@ -51,11 +51,11 @@ class RealUser extends React.Component{
                 <div className="userPage">
                     <div className="userHeader level2">
                         <div className="userImage">
-                            <img className='imageAttr' alt="" src='https://i.pinimg.com/originals/d8/5a/81/d85a810820b7ba00122476110223de70.jpg'/>
+                            <img className='imageAttr' alt="" src={this.state.profiledata['pfp']}/>
                         </div>
                         <div className="userInfo">
                             <div className="userName">
-                                <p className="usernameText">{this.state.profiledata['name']}</p>
+                                <p className="usernameText">{this.state.profiledata['first'] + " " + this.state.profiledata['last']}</p>
 
                                 {(()=>{
                                     if(this.state.profiledata['priv'] === 'post' || this.state.profiledata['priv'] === 'admin' || this.state.profiledata['priv'] === 'dev'){
