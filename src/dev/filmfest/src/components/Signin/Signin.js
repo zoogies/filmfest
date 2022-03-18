@@ -27,6 +27,9 @@ export default function Signin(){
                             else if(response === 'banned'){
                                 alert('This account is banned.')
                             }
+                            else if(response === 'An error has occurred'){
+                                alert(response)
+                            }
                             else{
                                 const key = JSON.parse(response)['key']
                                 const expires = JSON.parse(response)['expires']

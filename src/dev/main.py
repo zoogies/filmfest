@@ -3,6 +3,7 @@ from flask import Flask, send_from_directory, request, g, jsonify
 import sqlite3
 import json
 import hashlib
+import re
 import secrets
 import time
 from flask_cors import CORS
@@ -54,10 +55,14 @@ def authorized(paramID,paramKEY):
     if(paramKEY == data[0]):
         #if token expiry data is still in the future
         if(int(data[1]) > int(time.time())):
-           return True #user is authorized
+            print("not expired")
+            return True #user is authorized
         else:
+            print("expired")
             return False #user is not authorized
     else:
+        print("key not matches")
+        print(paramKEY,data[0])
         return False #user is not authorized
 
 # Serve React App
@@ -76,6 +81,11 @@ def signup():
             return 'taken'
         else:
             execute_db('INSERT INTO users (first,last,email,password,bio,badges,priv) VALUES ("'+request.json['first']+'","'+request.json['last']+'","'+request.json['email']+'","'+(hashlib.sha256(request.json['password'].encode('utf-8')).hexdigest())+'","","","comment")')
+            try:
+                os.mkdir('filmfest/server/users/'+str(query_db('select id from users where email="'+request.json['email']+'"')[0][0]))
+            except:
+                #TODO MAYBE HANDLING HERE BUT ASSUMING THIS IS JUST BECAUSE ACCOUNT DELETED FROM TABLE BUT ACCOUNTS SHOULD NEVER BE DELETED IT WOULD SHIFT EVERYTHING DOWN
+                pass
             return 'created'
     except Exception as e:
         print(e)
@@ -83,21 +93,24 @@ def signup():
 
 @app.route("/login", methods=["POST"])
 def login():
-    correct = query_db('select password from users where email="'+request.json['email']+'"')[0][0]
-    provided = hashlib.sha256(request.json['password'].encode('utf-8')).hexdigest()
-    if (correct == provided):
-        key = secrets.token_hex(16)
-        execute_db('update users set accesstoken="'+key+'" where email="'+request.json['email']+'"')
-        epoch = int(time.time())
-        expireamount = 86400 #expire time
-        expiration = epoch + expireamount
-        execute_db('update users set tokenexpires="'+str(expiration)+'" where email="'+request.json['email']+'"')
-        
-        data = query_db('select id,priv from users where email="'+request.json['email']+'"')[0]
-        
-        return json.dumps({"key":key,"expires":expiration,"id":str(data[0]),"priv":str(data[1])})
-    else:
-        return 'wrong'
+    try:
+        correct = query_db('select password from users where email="'+request.json['email']+'"')[0][0]
+        provided = hashlib.sha256(request.json['password'].encode('utf-8')).hexdigest()
+        if (correct == provided):
+            key = secrets.token_hex(16)
+            execute_db('update users set accesstoken="'+key+'" where email="'+request.json['email']+'"')
+            epoch = int(time.time())
+            expireamount = 86400 #expire time
+            expiration = epoch + expireamount
+            execute_db('update users set tokenexpires="'+str(expiration)+'" where email="'+request.json['email']+'"')
+            
+            data = query_db('select id,priv from users where email="'+request.json['email']+'"')[0]
+            
+            return json.dumps({"key":key,"expires":expiration,"id":str(data[0]),"priv":str(data[1])})
+        else:
+            return 'wrong'
+    except:
+        return 'An error has occurred'
 
 @app.route("/refreshkey", methods=["POST"])
 def refreshkey():
@@ -111,6 +124,36 @@ def refreshkey():
         return json.dumps({"key":key,"expires":expiration})
     else:
         return 'wrong'
+
+@app.route("/editprofile", methods=["POST"])
+def editprofile():
+    if(authorized(request.form['id'], request.form['key'])):
+        try:
+            if request.files["file"]:
+                #if file
+                uploaded_file = request.files["file"]
+
+                extension = query_db('select pfp from users where id="'+request.form['id']+'"')[0][0]
+                if(extension != None):
+                    os.remove('filmfest/server/users/'+request.form['id']+"/pfp."+extension)
+                uploaded_file.save("filmfest/server/users/" + request.form['id'] + "/pfp."+re.sub(r"\.(?![^.]*$)", "", uploaded_file.filename).split(".")[1])
+                execute_db('update users set pfp="'+re.sub(r"\.(?![^.]*$)", "", uploaded_file.filename).split(".")[1]+'" where id='+request.form['id'])
+        except Exception as e:
+            #no file
+            print(e)
+            pass
+
+        idd = request.form['id']
+        first = request.form['first']
+        last = request.form['last']
+        bio = request.form['bio']
+        key = request.form['key']
+
+        execute_db('update users set first="'+first+'",last="'+last+'",bio="'+bio+'" where id="'+idd+'"')
+
+        return "done"
+    else:
+        return "unauthorized"
 
 @app.route("/pdata", methods=["POST"])
 def pdata():

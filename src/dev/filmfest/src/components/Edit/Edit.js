@@ -3,6 +3,7 @@ import './Edit.css';
 import '../../resources/Shared.css'
 import basicxhr from "../../resources/xhr"
 import { useParams } from "react-router-dom"
+import { filexhr } from "../../resources/xhr";
 
 export default function EditParent(){
     const {userid} = useParams();
@@ -15,25 +16,66 @@ class Edit extends React.Component{
         this.state = {
             userid: props.uid,
             profiledata: null,
+            selectedFile: null
         }
     }
+
+    onFileChange = event => {
     
-    componentDidMount(){
-        basicxhr("pdata",{"profileid":this.state.userid,"userid":window.localStorage.getItem('gerdyid'),"userkey":window.localStorage.getItem('gerdykey')}).then(
-            (response) => {
-                //alert(typeof JSON.parse(response))
-                if(response === 'unauthorized'){
-                    window.localStorage.clear();
-                    window.location.href = "http://localhost:3000/login";
+        // Update the state
+        this.setState({ selectedFile: event.target.files[0] });
+      
+    };
+
+    onFileUpload = () => {
+        var data = {
+            "id":this.state.userid,
+            "key":window.localStorage.getItem('gerdykey'),
+            "first":document.getElementById('first').value,
+            "last":document.getElementById('last').value,
+            "bio":document.getElementById('bio').value
+        }
+        if(data['first'].trim().length !== 0 && data['last'].trim().length !== 0){
+            filexhr(this.state.selectedFile,data).then((response) => {
+                if(response === 'done'){
+                    window.location.href = "http://localhost:3000/user/" + window.localStorage.getItem('gerdyid');
                 }
-                else if(response === 'notexist'){
-                    this.setState({ profiledata: "notexist" });
+                else if(response === 'unauthorized'){
+                    alert('You are unauthorized for this action');
                 }
                 else{
-                    this.setState({ profiledata: JSON.parse(response) });
+                    alert('an error has occurred');
                 }
-            }
-        );
+            })
+        }
+        else{
+            alert('You need to enter text in every field.')
+        }
+    };
+    
+    componentDidMount(){
+        if(this.state.userid === window.localStorage.getItem('gerdyid')){
+            basicxhr("pdata",{"profileid":this.state.userid,"userid":window.localStorage.getItem('gerdyid'),"userkey":window.localStorage.getItem('gerdykey')}).then(
+                (response) => {
+                    //alert(typeof JSON.parse(response))
+                    if(response === 'unauthorized'){
+                        window.localStorage.clear();
+                        window.location.href = "http://localhost:3000/login";
+                    }
+                    else if(response === 'notexist'){
+                        this.setState({ profiledata: "notexist" });
+                    }
+                    else{
+                        this.setState({ profiledata: JSON.parse(response) });
+                    }
+                }
+            );
+        }
+        else{
+            //alert('You are not permitted to edit this profile.')
+            window.location.href = "http://localhost:3000/user/" + window.localStorage.getItem('gerdyid') + '/edit';
+        }
+
     }
 
     render(){
@@ -44,7 +86,7 @@ class Edit extends React.Component{
                     <h1>Edit Profile:</h1>
                     <div className="profileUpload">
                         <h3>Change Profile Picture:</h3>
-                        <input accept="image/png, image/gif, image/jpeg" type="file"/>
+                        <input onChange={this.onFileChange} accept="image/png, image/gif, image/jpeg" type="file"/>
                     </div>
                     <div>
                         <h3>First Name:</h3>
@@ -58,7 +100,7 @@ class Edit extends React.Component{
                         <h3>Bio:</h3>
                         <textarea id="bio" maxLength="100" className='level1' type="text" defaultValue={this.state.profiledata['bio']}/>
                     </div>
-                    <a type="submit" className="level1 updateBtn">
+                    <a onClick={this.onFileUpload} type="submit" className="level1 updateBtn">
                         <h3>Update</h3>
                     </a>
                 </div>
