@@ -62,9 +62,7 @@ export default class AdminPanel extends React.Component{
                     <GenericOptionBar content={[
                         {"text":"users","call":()=>{this.pagechanger('users')}},
                         {"text":"videos","call":()=>{this.pagechanger('videos')}},
-                        {"text":"classes","call":()=>{this.pagechanger('classes')}},
                         {"text":"projects","call":()=>{this.pagechanger('projects')}},
-                        {"text":"archive","call":()=>{this.pagechanger('archive')}},
                         {"text":"reports","call":()=>{this.pagechanger('reports')}},
                     ]}
                     />
@@ -96,9 +94,7 @@ export default class AdminPanel extends React.Component{
                         <GenericOptionBar content={[
                             {"text":"users","call":()=>{this.pagechanger('users')}},
                             {"text":"videos","call":()=>{this.pagechanger('videos')}},
-                            {"text":"classes","call":()=>{this.pagechanger('classes')}},
                             {"text":"projects","call":()=>{this.pagechanger('projects')}},
-                            {"text":"archive","call":()=>{this.pagechanger('archive')}},
                             {"text":"reports","call":()=>{this.pagechanger('reports')}},
                         ]}
                         />

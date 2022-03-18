@@ -15,7 +15,7 @@ export default function Player(){
                 <div className="videoinfo level2">
                     <h1 className="title">Title!</h1>
                     <p className="views">View Counter</p>
-                    <MiniProfile data={[1,"ryan","zmuda","dev","jpg"]}/>
+                    <MiniProfile data={[1,"ryan","zmuda","dev","jpeg"]}/>
                 </div>
                 <div className="reccomended">
                     <Recommendations/>

@@ -12,11 +12,16 @@ export default function TitleBar(){
             <h1 id='TitleBarText'>Film Fest</h1>
             <div className='navholder'>
                 <Navbutton text="Browse" location="browse"/>
+                <Navbutton text="Film Fest" location="archive"/>
                 <Navbutton text="Profile" location={"profile"}/>
-                <Navbutton text="Film Fest Archive" location="archive"/>
                 {(()=>{
                     if(window.localStorage.getItem('gerdypriv') === 'admin' || window.localStorage.getItem('gerdypriv') === 'dev'){
                         return <Navbutton text="Admin" location="admin"/>
+                    }
+                })()}
+                {(()=>{
+                    if(window.localStorage.getItem('gerdypriv') === 'admin' || window.localStorage.getItem('gerdypriv') === 'dev' || window.localStorage.getItem('gerdypriv') === 'verified'){
+                        return <Navbutton text="Upload" location="upload"/>
                     }
                 })()}
                 {(()=>{

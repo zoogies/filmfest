@@ -19,6 +19,7 @@ import Signin from '../Signin/Signin';
 import Signup from '../Signup/Signup';
 import Edit from '../Edit/Edit';
 import AdminPanel from '../AdminPanel/AdminPanel';
+import UploadWrapper from '../Upload/Upload';
 
 function App() {
   checkcreds();
@@ -35,6 +36,7 @@ function App() {
         <Route path="/login" element={<Signin/>}/>
         <Route path="/signup" element={<Signup/>}/>
         <Route path="/admin" element={<AdminPanel/>}/>
+        <Route path="/upload" element={<UploadWrapper/>}/>
         <Route path="*" element={<Notfound/>}/>
       </Routes>
     </Router>

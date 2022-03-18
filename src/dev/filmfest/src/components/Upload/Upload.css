@@ -1,0 +1,42 @@
+.uploadTop{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    
+}
+
+.uploadPanel{
+    max-width: 1000px;
+    border-radius: 20px;
+    margin: 30px;
+    -webkit-box-shadow: 0px 0px 17px 10px rgb(0 0 0 / 23%);
+    box-shadow: 0px 0px 17px 10px rgb(0 0 0 / 23%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.uploadText{
+    margin: 20px;
+    margin-bottom: 0px;
+}
+
+.uploadForm{
+    display: flex;
+    flex-direction: column;
+    margin: 30px;
+}
+
+.uploadVideoText{
+    margin-top: 0px;
+}
+
+.videoUpload {
+    margin-bottom: 10px;
+}
+
+.videoUpload > input {
+    border-radius: 0px;
+    -webkit-box-shadow: 0px 0px 0px 0px rgb(0 0 0 / 23%);
+    box-shadow: 0px 0px 0px 0px rgb(0 0 0 / 23%);
+}

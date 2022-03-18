@@ -155,6 +155,13 @@ def editprofile():
     else:
         return "unauthorized"
 
+@app.route("/videouploadpre", methods=["POST"])
+def videouploadpre():
+    if(authorized(request.json['userid'],request.json['userkey'])):
+        return json.dumps(query_db('select id,name from projects where enabled="yes"'))
+    else:
+        return "unauthorized"
+
 @app.route("/pdata", methods=["POST"])
 def pdata():
     #starting data
@@ -168,19 +175,29 @@ def pdata():
             #profile picture here eventually
     }
     #query for data
-    profiledata = query_db('select distinct first,last,bio,badges,priv,pfp from users where id="'+request.json['profileid']+'"')
+    profiledata = query_db('select distinct first,last,bio,priv,pfp from users where id="'+request.json['profileid']+'"')
     if(len(profiledata) > 0): #check if exists
         #update keys if its does
         data.update(first=str(profiledata[0][0]))
         data.update(last=str(profiledata[0][1]))
         data.update(bio=str(profiledata[0][2]))
-        data.update(badges=str(profiledata[0][3]))
-        data.update(priv=str(profiledata[0][4]))
+        data.update(priv=str(profiledata[0][3]))
 
-        if(profiledata[0][5] == None):
+        grouplist = str(query_db('select distinct groups from users where id="'+request.json['profileid']+'"')[0][0]).split(' ')
+        finalgroupstring = ""
+
+        if(grouplist[0] != "None"):
+            for groupid in grouplist:
+                finalgroupstring += str(query_db('select name from groups where id='+groupid)[0][0]) + "_"
+            data.update(badges=finalgroupstring[:-1])
+        else:
+            data.update(badges="")
+
+
+        if(profiledata[0][4] == None):
             data.update(pfp="http://127.0.0.1:5000/users/defualt/pfp.jpeg")
         else:
-            data.update(pfp="http://127.0.0.1:5000/users/"+request.json['profileid']+"/pfp."+str(profiledata[0][5]))
+            data.update(pfp="http://127.0.0.1:5000/users/"+request.json['profileid']+"/pfp."+str(profiledata[0][4]))
 
         #user is not authenticated
         if(request.json['userid'] == None or request.json['userkey'] == None):

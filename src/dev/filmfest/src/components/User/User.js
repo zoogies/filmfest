@@ -97,7 +97,9 @@ class RealUser extends React.Component{
                             <div className="userBadges">
                                 {
                                     this.state.profiledata['badges'].split("_").map(function(type){
-                                        return <ProfileBadge key={type} type={type} />
+                                        if(type != '' && type != ' '){
+                                            return <ProfileBadge key={type} type={type} />
+                                        }
                                     })
                                 }
                             </div>

@@ -1,11 +1,11 @@
 import '../../resources/Shared.css'
 import './ProfileBadge.css'
 import {AiFillEye ,AiFillCode} from 'react-icons/ai';
-import {MdMovieFilter, MdMovie, MdEdit} from 'react-icons/md';
+import {MdMovieFilter, MdMovie, MdEdit, MdShield} from 'react-icons/md';
 import {BsFillCameraReelsFill} from 'react-icons/bs';
 
 export default function ProfileBadge(props){
-    if(props.type === "ma1"){
+    if(props.type === "Media Arts 1"){
         const style = {
             backgroundColor : "#04db3a"
         }
@@ -18,7 +18,7 @@ export default function ProfileBadge(props){
             </div>
         )
     }
-    else if(props.type === "ma2"){
+    else if(props.type === "Media Arts 2"){
         const style = {
             backgroundColor : "#7700cc"
         }
@@ -44,7 +44,7 @@ export default function ProfileBadge(props){
             </div>
         )
     }
-    else if(props.type === "dev"){
+    else if(props.type === "Developer"){
         return(
             <div className="badge dev">
                 <div className='icon'>
@@ -54,7 +54,7 @@ export default function ProfileBadge(props){
             </div>
         )
     }
-    else if(props.type === "ff"){
+    else if(props.type === "Film Festival Crew"){
         const style = {
             backgroundColor : "#ff00cc"
         }
@@ -63,7 +63,20 @@ export default function ProfileBadge(props){
                 <div className='icon'>
                     <BsFillCameraReelsFill size={30}/>
                 </div>
-                <h3 className='badgetext'>Film Festival</h3>
+                <h3 className='badgetext'>Film Festival Crew</h3>
+            </div>
+        )
+    }
+    else if(props.type === "Admin"){
+        const style = {
+            backgroundColor : "rgb(255, 187, 0)"
+        }
+        return(
+            <div style={style} className="badge">
+                <div className='icon'>
+                    <MdShield size={30}/>
+                </div>
+                <h3 className='badgetext'>Admin</h3>
             </div>
         )
     }
@@ -81,7 +94,16 @@ export default function ProfileBadge(props){
         )
     }
     else{
-        return(<></>)
+        const style = {
+            backgroundColor : ""
+        }
+        return(
+            <div style={style} className="badge">
+                <div className='icon'>
+                </div>
+                <h3 className='badgetext'>{props.type}</h3>
+            </div>
+        )
     }
     
 }
