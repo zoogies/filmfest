@@ -2,6 +2,7 @@ import './Upload.css';
 import '../../resources/Shared.css'
 import basicxhr from "../../resources/xhr"
 import React from 'react';
+import ListContainer from '../ListContainer/ListContainer';
 
 export default function UploadWrapper(props){
     return(<Upload/>)
@@ -14,7 +15,21 @@ class Upload extends React.Component{
         this.state = {
             userid: props.uid,
             profiledata: null,
+            selectedFile:null,
+            selectedProject:null,
+            selectedClass:null
         }
+    }
+
+    onFileChange = event => {
+    
+        // Update the state
+        this.setState({ selectedFile: event.target.files[0] });
+        alert(this.state.selectedFile)
+    };
+
+    handleProjectSelect = (value) => {
+        this.setState({selectedProject: value});
     }
 
     componentDidMount(){
@@ -41,10 +56,18 @@ class Upload extends React.Component{
                         <form className='uploadForm'>
                             <div className="videoUpload">
                                 <h3 className='uploadVideoText'>Upload Video:</h3>
-                                <input accept="video/mp4" type="file"/>
+                                <input onChange={this.onFileChange} accept="video/mp4" type="file"/>
                             </div>
+
                             <textarea placeholder='Video Title' className="level1" type="text"/>
                             <textarea placeholder='Video Credits and Description' className="level1" type="text"/>
+                            
+                            <h3>Select Project:</h3>
+                            <ListContainer type="checkbox" recieveSelections={this.handleProjectSelect} content={this.state.profiledata}/>
+
+                            <a onClick={this.onFileUpload} type="submit" className="level1 UploadBtn">
+                                <h3 className='uploadtxt'>Upload</h3>
+                            </a>
                         </form>
                     </div>
                 </div>
