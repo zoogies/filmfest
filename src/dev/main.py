@@ -162,6 +162,53 @@ def videouploadpre():
     else:
         return "unauthorized"
 
+@app.route("/postvideo", methods=["POST"])
+def postvideo():
+    if(authorized(request.form['userid'],request.form['userkey'])):
+        #upload to /server/users/uid/videoid.mp4
+        videoid = query_db('select count(*) from videos')[0][0] + 1
+        path = "filmfest/server/users/" + str(request.form['userid']) + "/" + str(videoid) + ".mp4"
+        request.files["file"].save(path)
+        execute_db('insert into videos (owner,path,views,project,class,description,title) values ("'+request.form['userid']+'","'+path+'","0","'+request.form['project']+'","'+request.form['class']+'","'+request.form['description']+'","'+request.form['title']+'")')
+        return str(videoid)
+    else:
+        return "unauthorized"
+
+@app.route("/videodata", methods=["POST"])
+def videodata():
+
+    videorow = query_db('select * from videos where id='+request.json['videoid'])[0]
+    ownerdata = query_db('select id,first,last,priv,pfp from users where id='+videorow[1])
+    
+    owner = {
+        "id":ownerdata[0][0],
+        "first":ownerdata[0][1],
+        "last":ownerdata[0][2],
+        "priv":ownerdata[0][3],
+        "pfp":ownerdata[0][4],
+    }
+
+    location = 'http://127.0.0.1:5000/' + str(videorow[2][9:])
+    views = videorow[3]
+    project = videorow[4]
+    videoclass = videorow[5]
+    title = videorow[7]
+    description = videorow[6]
+
+    videodata = {
+        "owner":owner,
+        "location":location,
+        "views":views,
+        "project":project,
+        "class":videoclass,
+        "title":title,
+        "description":description,
+    }
+
+    execute_db('update videos set views="'+str(int(views) + 1) + '" where id="'+request.json['videoid']+'"')
+
+    return json.dumps(videodata)
+
 @app.route("/pdata", methods=["POST"])
 def pdata():
     #starting data

@@ -6,7 +6,7 @@ export default function Watch(props){
     let { videoid } = useParams();
     return(
         <div className='watch'>
-            <Player/>
+            <Player videoid={videoid}/>
         </div>
     )
 }

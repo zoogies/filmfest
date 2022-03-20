@@ -34,18 +34,18 @@ class TrueListContainer extends React.Component{
     render(){
         if(this.state.type === 'checkbox'){
             return(
-            <div className="level1 ListContainerTop">
-                {
-                    this.state.content.map((option) =>{
-                        return(
-                            <div key={option[0]} className='ListContainerOption level2'>
-                                <input onChange={() => {this.handleCheck(option)}} className='ListContainerCheckbox' type="checkbox"/>
-                                <p className='ListContainerOptionText'>{option[1]}</p>
-                            </div>   
-                        )
-                    })
-                }
-            </div>
+                <div className="level1 ListContainerTop">
+                    {
+                        this.state.content.map((option) =>{
+                            return(
+                                <div key={option[0]} className='ListContainerOption level2'>
+                                    <input onChange={() => {this.handleCheck(option)}} className='ListContainerCheckbox' type="checkbox"/>
+                                    <p className='ListContainerOptionText'>{option[1]}</p>
+                                </div>   
+                            )
+                        })
+                    }
+                </div>
             )
         }
         else{

@@ -54,3 +54,8 @@
 .uploadtxt{
     margin: 10px;
 }
+
+.uploadForm > textarea{
+    width: 100%;
+    min-height: 70px;
+}

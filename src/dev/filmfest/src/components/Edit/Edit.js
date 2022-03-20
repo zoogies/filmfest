@@ -36,7 +36,7 @@ class Edit extends React.Component{
             "bio":document.getElementById('bio').value
         }
         if(data['first'].trim().length !== 0 && data['last'].trim().length !== 0){
-            filexhr(this.state.selectedFile,data).then((response) => {
+            filexhr(this.state.selectedFile,data,'editprofile').then((response) => {
                 if(response === 'done'){
                     window.location.href = "http://localhost:3000/user/" + window.localStorage.getItem('gerdyid');
                 }
