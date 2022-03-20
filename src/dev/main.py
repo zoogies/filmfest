@@ -158,7 +158,7 @@ def editprofile():
 @app.route("/videouploadpre", methods=["POST"])
 def videouploadpre():
     if(authorized(request.json['userid'],request.json['userkey'])):
-        return json.dumps(query_db('select id,name from projects where enabled="yes"'))
+        return json.dumps([query_db('select id,name from projects where enabled="yes"')] + [query_db('select id,name from groups where type="class"')])
     else:
         return "unauthorized"
 

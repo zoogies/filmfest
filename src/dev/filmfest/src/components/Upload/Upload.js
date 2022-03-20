@@ -15,6 +15,7 @@ class Upload extends React.Component{
         this.state = {
             userid: props.uid,
             profiledata: null,
+            classdata:null,
             selectedFile:null,
             selectedProject:null,
             selectedClass:null
@@ -22,7 +23,6 @@ class Upload extends React.Component{
     }
 
     onFileChange = event => {
-    
         // Update the state
         this.setState({ selectedFile: event.target.files[0] });
         alert(this.state.selectedFile)
@@ -30,6 +30,10 @@ class Upload extends React.Component{
 
     handleProjectSelect = (value) => {
         this.setState({selectedProject: value});
+    }
+
+    handleClassSelect = (value) => {
+        this.setState({selectedClass: value});
     }
 
     componentDidMount(){
@@ -41,14 +45,15 @@ class Upload extends React.Component{
                     window.location.href = "http://localhost:3000/login";
                 }
                 else{
-                    this.setState({ profiledata: JSON.parse(response) });
+                    this.setState({ profiledata: JSON.parse(response)[0]});
+                    this.setState({ classdata: JSON.parse(response)[1]});
                 }
             }
         );
     }
 
     render(){
-        if(this.state.profiledata !== null && this.state.profiledata !== 'notexist'){
+        if(this.state.profiledata !== null && this.state.profiledata !== 'notexist' && this.state.classdata !== null){
             return(
                 <div className="uploadTop">
                     <div className="uploadPanel level2">
@@ -64,6 +69,9 @@ class Upload extends React.Component{
                             
                             <h3>Select Project:</h3>
                             <ListContainer type="checkbox" recieveSelections={this.handleProjectSelect} content={this.state.profiledata}/>
+                            
+                            <h3>Select Class:</h3>
+                            <ListContainer type="checkbox" recieveSelections={this.handleClassSelect} content={this.state.classdata}/>
 
                             <a onClick={this.onFileUpload} type="submit" className="level1 UploadBtn">
                                 <h3 className='uploadtxt'>Upload</h3>
