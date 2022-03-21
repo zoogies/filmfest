@@ -6,8 +6,8 @@ export default function Contentpanel(props){
     return(
         <div className='contentpanel'>
         {
-            props.content.map(function(video){
-                return <Videochoice key={video.id} info={video} />
+            JSON.parse(props.content).map(function(video){
+                return <Videochoice key={video['id']} info={video} />
             })
         }
         </div>

@@ -224,6 +224,26 @@ def videodata():
     except:
         return "notfound"
 
+@app.route("/getreccomendations", methods=["POST"])
+def getreccomendations():
+    try:
+        if(request.json['mode'] == 'recent'):
+            items = query_db('select id,owner,path,views,title from videos order by id desc limit 30')
+            
+            finalist=[]
+            for item in items:
+                finalist.append({
+                    "id":item[0],
+                    "owner":item[1], #THIS TURN INTO ITS OWN ARRAY
+                    "thumb":'http://127.0.0.1:5000/' + str(item[2][9:]) +"#t=.2",
+                    "views":item[3],
+                    "title":item[4],
+                })
+            return json.dumps(finalist)
+    except Exception as e:
+        print(e)
+        return 'fail'
+
 @app.route("/pdata", methods=["POST"])
 def pdata():
     #starting data

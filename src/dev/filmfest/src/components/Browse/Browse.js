@@ -1,4 +1,6 @@
 import Contentpanel from "../Contentpanel/Contentpanel";
+import React from 'react';
+import basicxhr from "../../resources/xhr";
 
 //temp testing data for creating video panels
 const data = [
@@ -9,10 +11,40 @@ const data = [
     {"id":"3","author":"c","title":"3dffhgghfghgfhfghfghfghfghfghfghfghfghfghfghgf","thumbnail":"https://media.istockphoto.com/photos/picturesque-morning-in-plitvice-national-park-colorful-spring-scene-picture-id1093110112?k=20&m=1093110112&s=612x612&w=0&h=3OhKOpvzOSJgwThQmGhshfOnZTvMExZX2R91jNNStBY="},
 ]
 
-export default function Home(){
-    return(
-        <>
-        <Contentpanel content={data}/>
-        </>
-    );
+export default class Browse extends React.Component{
+    constructor(props){
+        super(props);
+        this.state = {
+            browseContent: null
+        }
+    }
+
+    componentDidMount(){
+        basicxhr("getreccomendations",{"mode":"recent"}).then(
+            (response) => {
+                if(response === 'fail'){
+                    this.setState({browseContent:'fail'});
+                }
+                else{
+                    this.setState({browseContent:response});
+                }
+            }
+        );
+    }
+
+    render(){
+        if(this.state.browseContent !== null && this.state.browseContent !== 'fail'){
+            return(
+                <>
+                <Contentpanel content={this.state.browseContent}/>
+                </>
+            );
+        }
+        else if(this.state.browseContent === 'fail'){
+            return <p>This operation has failed. Please reload the page to try again.</p>
+        }
+        else{
+            return <p>Loading...</p> //TODO UPDATE THIS LOADING ICON REALLL!!!
+        }
+    }
 }

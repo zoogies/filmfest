@@ -1,5 +1,5 @@
 import './App.css';
-import Home from '../Home/Home.js';
+import Browse from '../Browse/Browse.js';
 import Archive from '../Archive/Archive.js';
 import '../../resources/Shared.css';
 import TitleBar from "../TitleBar/TitleBar";
@@ -28,7 +28,7 @@ function App() {
       <TitleBar/>
       <Routes>
         <Route path="/" element={<Redirect/>}/>
-        <Route path="/browse" element={<Home/>}/>
+        <Route path="/browse" element={<Browse/>}/>
         <Route path="/archive" element={<Archive/>}/>
         <Route path="/watch/:videoid" element={<Watch/>}/>
         <Route path="/user/:userid" element={<User/>}/>
