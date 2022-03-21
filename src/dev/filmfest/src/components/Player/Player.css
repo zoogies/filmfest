@@ -61,6 +61,7 @@
 .views{
     margin-top: 0px;
     color: rgb(177, 177, 177);
+    margin-bottom: 3px;
 }
 
 .name{
@@ -70,4 +71,9 @@
 .reccomended{
     justify-self: right;
     max-width: 100%;
+}
+
+.description{
+    margin: 0px;
+    margin-bottom: 10px;
 }

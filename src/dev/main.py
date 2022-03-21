@@ -176,38 +176,53 @@ def postvideo():
 
 @app.route("/videodata", methods=["POST"])
 def videodata():
+    try:
+        videorow = query_db('select * from videos where id='+request.json['videoid'])[0]
+        ownerdata = query_db('select id,first,last,priv,pfp from users where id='+videorow[1])
+        
+        owner = {
+            "id":ownerdata[0][0],
+            "first":ownerdata[0][1],
+            "last":ownerdata[0][2],
+            "priv":ownerdata[0][3],
+            "pfp":ownerdata[0][4],
+        }
 
-    videorow = query_db('select * from videos where id='+request.json['videoid'])[0]
-    ownerdata = query_db('select id,first,last,priv,pfp from users where id='+videorow[1])
-    
-    owner = {
-        "id":ownerdata[0][0],
-        "first":ownerdata[0][1],
-        "last":ownerdata[0][2],
-        "priv":ownerdata[0][3],
-        "pfp":ownerdata[0][4],
-    }
+        location = 'http://127.0.0.1:5000/' + str(videorow[2][9:])
+        views = videorow[3]
 
-    location = 'http://127.0.0.1:5000/' + str(videorow[2][9:])
-    views = videorow[3]
-    project = videorow[4]
-    videoclass = videorow[5]
-    title = videorow[7]
-    description = videorow[6]
+        tags = []
+        for item in (videorow[4].split(' ')):
+            tags.append({
+                "id":item,
+                "name":query_db('select name from projects where enabled="yes" and id="'+item+'"')[0][0],
+                "type":"project",
+            })
 
-    videodata = {
-        "owner":owner,
-        "location":location,
-        "views":views,
-        "project":project,
-        "class":videoclass,
-        "title":title,
-        "description":description,
-    }
+        for item in (videorow[5].split(' ')):
+            tags.append({
+                "id":item,
+                "name":query_db('select name from groups where enabled="yes" and type="class" and id="'+item+'"')[0][0],
+                "type":"class"
+            })
 
-    execute_db('update videos set views="'+str(int(views) + 1) + '" where id="'+request.json['videoid']+'"')
+        title = videorow[7]
+        description = videorow[6]
 
-    return json.dumps(videodata)
+        videodata = {
+            "owner":owner,
+            "location":location,
+            "views":views,
+            "tags":tags,
+            "title":title,
+            "description":description,
+        }
+
+        execute_db('update videos set views="'+str(int(views) + 1) + '" where id="'+request.json['videoid']+'"')
+
+        return json.dumps(videodata)
+    except:
+        return "notfound"
 
 @app.route("/pdata", methods=["POST"])
 def pdata():

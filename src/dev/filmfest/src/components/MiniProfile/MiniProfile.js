@@ -10,20 +10,20 @@ export default function MiniProfile(props){
             }}>
             <div className='circle'>
                 {(()=>{
-                    if(props.data[4] == null){
+                    if(props.data['pfp'] == null){
                         return <img className='profilePreviewSmall' alt="" src={"http://127.0.0.1:5000/users/defualt/pfp.jpeg"}/>
                     }
                     else{
-                        return <img className='profilePreviewSmall' alt="" src={"http://127.0.0.1:5000/users/"+props.data[0]+"/pfp."+props.data[4]}/>
+                        return <img className='profilePreviewSmall' alt="" src={"http://127.0.0.1:5000/users/"+props.data['id']+"/pfp."+props.data['pfp']}/>
                     }
                 })()}
 
             </div>
             <div className='userline'>
-                <h2>{props.data[1] + ' ' +props.data[2]}</h2>
+                <h2>{props.data['first'] + ' ' +props.data['last']}</h2>
                 <div className='iconsSmallProfile'>
                     {(()=>{
-                        if(props.data[3] === 'post' || props.data[3] === 'admin' || props.data[3] === 'dev'){
+                        if(props.data['priv'] === 'post' || props.data['priv'] === 'admin' || props.data['priv'] === 'dev'){
                             return(
                                 <MdVerified tooltip="verified" color="#03b6fc" size={30}/>
                             )
@@ -31,7 +31,7 @@ export default function MiniProfile(props){
                     })()}
 
                     {(()=>{
-                        if(props.data[3] === 'admin' || props.data[3] === 'dev'){
+                        if(props.data['priv'] === 'admin' || props.data['priv'] === 'dev'){
                             return(
                                 <MdShield color="#ffbb00" size={30}/>
                             )
@@ -39,7 +39,7 @@ export default function MiniProfile(props){
                     })()}
 
                     {(()=>{
-                        if(props.data[3] === 'dev'){
+                        if(props.data['priv'] === 'dev'){
                             return(
                                 <CgTerminal color="#11ff00" size={30}/>
                             )

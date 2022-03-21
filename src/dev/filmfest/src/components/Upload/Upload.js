@@ -19,7 +19,8 @@ class Upload extends React.Component{
             classdata:null,
             selectedFile:null,
             selectedProject:null,
-            selectedClass:null
+            selectedClass:null,
+            uploading:false,
         }
     }
 
@@ -48,6 +49,7 @@ class Upload extends React.Component{
 
         if(data['title'].trim().length !== 0){
             if(this.state.selectedFile != null){
+                this.setState({uploading: true});
                 filexhr(this.state.selectedFile,data,'postvideo').then((response) => {
                     if(response === 'unauthorized'){
                         alert('You are unauthorized for this action');
@@ -86,7 +88,7 @@ class Upload extends React.Component{
     render(){
         const priv = window.localStorage.getItem('gerdypriv');
         if(priv === 'admin' || priv === 'dev' || priv === 'verified'){
-            if(this.state.profiledata !== null && this.state.profiledata !== 'notexist' && this.state.classdata !== null){
+            if(this.state.profiledata !== null && this.state.profiledata !== 'notexist' && this.state.classdata !== null && this.state.uploading === false){
                 return(
                     <div className="uploadTop">
                         <div className="uploadPanel level2">
@@ -113,6 +115,9 @@ class Upload extends React.Component{
                         </div>
                     </div>
                 )
+            }
+            else if(this.state.uploading === true){
+                return <p>Uploading...</p> //TODO UPDATE THIS TO UPLOADING ICON REALLL!!!
             }
             else{
                 return <p>Loading...</p> //TODO UPDATE THIS LOADING ICON REALLL!!!
