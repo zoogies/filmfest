@@ -235,11 +235,29 @@ def getreccomendations():
                 finalist.append({
                     "id":item[0],
                     "owner":item[1], #THIS TURN INTO ITS OWN ARRAY
-                    "thumb":'http://127.0.0.1:5000/' + str(item[2][9:]) +"#t=.2",
+                    "thumb":'http://127.0.0.1:5000/' + str(item[2][9:]) +"#t=1",
                     "views":item[3],
                     "title":item[4],
                 })
             return json.dumps(finalist)
+        #TODO REVISIT AND CREATE A RECCOMMENDED ALGORITHM POSSIBLY UTILIZING LOCAL STORAGE FOR VIEW HISTORY BUT FOR NOW RETURN RANDOM VIDEOS
+        #TODO MAYBE MOVE THIS CODE TO THE VIDEO GET DATA SO ITS NOT USING MULTIPLE CALLS
+        elif(request.json['mode'] == 'reccomended'):
+            # TODO THIS IS HOW YOU WOULD NOT GET CURRENT VIDEO IN RETURN
+            # select id,owner,path,views,title from videos where not id=1  order by random() limit 10
+            items = query_db('select id,owner,path,views,title from videos order by random() limit 10')
+            
+            finalist=[]
+            for item in items:
+                finalist.append({
+                    "id":item[0],
+                    "owner":item[1], #THIS TURN INTO ITS OWN ARRAY
+                    "thumb":'http://127.0.0.1:5000/' + str(item[2][9:]) +"#t=1",
+                    "views":item[3],
+                    "title":item[4],
+                })
+            return json.dumps(finalist)
+
     except Exception as e:
         print(e)
         return 'fail'
@@ -280,6 +298,18 @@ def pdata():
             data.update(pfp="http://127.0.0.1:5000/users/defualt/pfp.jpeg")
         else:
             data.update(pfp="http://127.0.0.1:5000/users/"+request.json['profileid']+"/pfp."+str(profiledata[0][4]))
+        
+        items = query_db('select id,owner,path,views,title from videos where owner="'+request.json['profileid']+'"')
+        finalist=[]
+        for item in items:
+            finalist.append({
+                "id":item[0],
+                "owner":item[1], #THIS TURN INTO ITS OWN ARRAY
+                "thumb":'http://127.0.0.1:5000/' + str(item[2][9:]) +"#t=1",
+                "views":item[3],
+                "title":item[4],
+            })
+        data.update(content=finalist)
 
         #user is not authenticated
         if(request.json['userid'] == None or request.json['userkey'] == None):

@@ -6,7 +6,7 @@ import '../../resources/Shared.css'
 export default function MiniProfile(props){
     return(
             <div className="profileSmall level1" onClick={()=>{
-                window.location.href = "http://localhost:3000/user/"+props.data[0];
+                window.location.href = "http://localhost:3000/user/"+props.data['id'];
             }}>
             <div className='circle'>
                 {(()=>{

@@ -99,7 +99,7 @@ class Upload extends React.Component{
                                     <input onChange={this.onFileChange} accept="video/mp4" type="file"/>
                                 </div>
     
-                                <textarea id="title" maxLength="50" placeholder='Video Title' className="level1" type="text"/>
+                                <textarea id="title" maxLength="70" placeholder='Video Title' className="level1" type="text"/>
                                 <textarea id="description" maxLength="200" placeholder='Video Credits and Description' className="level1" type="text"/>
                                 
                                 <h3>Select Project:</h3>
