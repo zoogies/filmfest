@@ -65,6 +65,18 @@ def authorized(paramID,paramKEY):
         print(paramKEY,data[0])
         return False #user is not authorized
 
+def getownerdata(idowner):
+    ownerdata = query_db('select id,first,last,priv,pfp from users where id='+idowner)
+        
+    owner = {
+        "id":ownerdata[0][0],
+        "first":ownerdata[0][1],
+        "last":ownerdata[0][2],
+        "priv":ownerdata[0][3],
+        "pfp":ownerdata[0][4],
+    }
+    return owner
+
 # Serve React App
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
@@ -178,33 +190,29 @@ def postvideo():
 def videodata():
     try:
         videorow = query_db('select * from videos where id='+request.json['videoid'])[0]
-        ownerdata = query_db('select id,first,last,priv,pfp from users where id='+videorow[1])
         
-        owner = {
-            "id":ownerdata[0][0],
-            "first":ownerdata[0][1],
-            "last":ownerdata[0][2],
-            "priv":ownerdata[0][3],
-            "pfp":ownerdata[0][4],
-        }
+        owner = getownerdata(videorow[1])
 
         location = 'http://127.0.0.1:5000/' + str(videorow[2][9:])
         views = videorow[3]
 
         tags = []
-        for item in (videorow[4].split(' ')):
-            tags.append({
-                "id":item,
-                "name":query_db('select name from projects where enabled="yes" and id="'+item+'"')[0][0],
-                "type":"project",
-            })
+        try:
+            for item in (videorow[4].split(' ')):
+                tags.append({
+                    "id":item,
+                    "name":query_db('select name from projects where enabled="yes" and id="'+item+'"')[0][0],
+                    "type":"project",
+                })
 
-        for item in (videorow[5].split(' ')):
-            tags.append({
-                "id":item,
-                "name":query_db('select name from groups where enabled="yes" and type="class" and id="'+item+'"')[0][0],
-                "type":"class"
-            })
+            for item in (videorow[5].split(' ')):
+                tags.append({
+                    "id":item,
+                    "name":query_db('select name from groups where enabled="yes" and type="class" and id="'+item+'"')[0][0],
+                    "type":"class"
+                })
+        except:
+            pass
 
         title = videorow[7]
         description = videorow[6]
@@ -221,7 +229,8 @@ def videodata():
         execute_db('update videos set views="'+str(int(views) + 1) + '" where id="'+request.json['videoid']+'"')
 
         return json.dumps(videodata)
-    except:
+    except Exception as e:
+        print(e)
         return "notfound"
 
 @app.route("/getreccomendations", methods=["POST"])
@@ -234,7 +243,7 @@ def getreccomendations():
             for item in items:
                 finalist.append({
                     "id":item[0],
-                    "owner":item[1], #THIS TURN INTO ITS OWN ARRAY
+                    "owner":getownerdata(item[1]), #THIS TURN INTO ITS OWN ARRAY
                     "thumb":'http://127.0.0.1:5000/' + str(item[2][9:]) +"#t=1",
                     "views":item[3],
                     "title":item[4],
@@ -245,13 +254,13 @@ def getreccomendations():
         elif(request.json['mode'] == 'reccomended'):
             # TODO THIS IS HOW YOU WOULD NOT GET CURRENT VIDEO IN RETURN
             # select id,owner,path,views,title from videos where not id=1  order by random() limit 10
-            items = query_db('select id,owner,path,views,title from videos order by random() limit 10')
+            items = query_db('select id,owner,path,views,title from videos order by random() limit 8')
             
             finalist=[]
             for item in items:
                 finalist.append({
                     "id":item[0],
-                    "owner":item[1], #THIS TURN INTO ITS OWN ARRAY
+                    "owner":getownerdata(item[1]), #THIS TURN INTO ITS OWN ARRAY
                     "thumb":'http://127.0.0.1:5000/' + str(item[2][9:]) +"#t=1",
                     "views":item[3],
                     "title":item[4],
@@ -304,7 +313,7 @@ def pdata():
         for item in items:
             finalist.append({
                 "id":item[0],
-                "owner":item[1], #THIS TURN INTO ITS OWN ARRAY
+                "owner":getownerdata(item[1]), #THIS TURN INTO ITS OWN ARRAY
                 "thumb":'http://127.0.0.1:5000/' + str(item[2][9:]) +"#t=1",
                 "views":item[3],
                 "title":item[4],

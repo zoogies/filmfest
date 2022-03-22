@@ -23,7 +23,7 @@ export default function MiniProfile(props){
                 <h2>{props.data['first'] + ' ' +props.data['last']}</h2>
                 <div className='iconsSmallProfile'>
                     {(()=>{
-                        if(props.data['priv'] === 'post' || props.data['priv'] === 'admin' || props.data['priv'] === 'dev'){
+                        if(props.data['priv'] === 'verified' || props.data['priv'] === 'admin' || props.data['priv'] === 'dev'){
                             return(
                                 <MdVerified tooltip="verified" color="#03b6fc" size={30}/>
                             )

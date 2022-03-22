@@ -24,7 +24,7 @@ export default class Recommendations extends React.Component{
         if(this.state.reccomendations !== null){
             return(
                 <div className="panel level2">
-                    <h1 className="similarText">Similar Videos:</h1>
+                    <h1 className="similarText">Recommended:</h1>
                     <Contentpanel className="reccomendedpanel" content={this.state.reccomendations}/>
                 </div>
             )

@@ -7,6 +7,20 @@ import React from "react"
 import basicxhr from "../../resources/xhr";
 import TagBox from "../TagBox/TagBox"
 
+function TagWrapper(props){
+    if(props.tags[0] !== undefined){
+        return(
+            <>
+            <h2 className="TagText">Tags:</h2>
+            <TagBox content={props.tags}/>
+            </>
+        )
+    }
+    else{
+        return(<></>)
+    }
+}
+
 export default class Player extends React.Component{
     constructor(props){
         super(props);
@@ -43,8 +57,8 @@ export default class Player extends React.Component{
                             <p className="views">{this.state.videodata['views'] + ' views'}</p>
                             <p className="description">{this.state.videodata['description']}</p>
                             <MiniProfile data={this.state.videodata['owner']}/>
-                            <h2 className="TagText">Tags:</h2>
-                            <TagBox content={this.state.videodata['tags']}/>
+                            
+                            <TagWrapper tags={this.state.videodata['tags']}/>
                         </div>
                         <div className="reccomended">
                             <Recommendations/>

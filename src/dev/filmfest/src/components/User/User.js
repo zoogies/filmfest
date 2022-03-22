@@ -49,7 +49,7 @@ class RealUser extends React.Component{
                                 <p className="usernameText">{this.state.profiledata['first'] + " " + this.state.profiledata['last']}</p>
 
                                 {(()=>{
-                                    if(this.state.profiledata['priv'] === 'post' || this.state.profiledata['priv'] === 'admin' || this.state.profiledata['priv'] === 'dev'){
+                                    if(this.state.profiledata['priv'] === 'verified' || this.state.profiledata['priv'] === 'admin' || this.state.profiledata['priv'] === 'dev'){
                                         return(
                                             <MdVerified tooltip="verified" color="#03b6fc" size={45}/>
                                         )
