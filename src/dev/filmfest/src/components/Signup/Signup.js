@@ -49,7 +49,7 @@ export default function Signup(){
                             }
                             else if(response==='created'){
                                 window.localStorage.clear();
-                                window.location.href = "http://localhost:3000/login";
+                                window.location.href = "http://192.168.50.80:3000/login";
                             }
                             else{
                                 alert('A server error has occurred. Please contact an adminstrator.')

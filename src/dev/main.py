@@ -81,10 +81,12 @@ def getownerdata(idowner):
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def serve(path):
-    if path != "" and os.path.exists(app.static_folder + '/' + path):
-        return send_from_directory(app.static_folder, path)
+    if path != "" and os.path.exists('filmfest/build' + '/' + path):
+        return send_from_directory('filmfest/build', path)
+    elif(path.split('/')[0] == 'users'):
+        return send_from_directory('filmfest/server', path)
     else:
-        return send_from_directory(app.static_folder, 'index.html')
+        return send_from_directory('filmfest/build', 'index.html')
 
 @app.route('/signup', methods=["POST"])
 def signup():
@@ -92,10 +94,14 @@ def signup():
         if(query_db('SELECT * FROM users WHERE email="'+request.json['email']+'"') != []):
             return 'taken'
         else:
-            execute_db('INSERT INTO users (first,last,email,password,bio,badges,priv) VALUES ("'+request.json['first']+'","'+request.json['last']+'","'+request.json['email']+'","'+(hashlib.sha256(request.json['password'].encode('utf-8')).hexdigest())+'","","","comment")')
+            try:
+                execute_db('INSERT INTO users (first,last,email,password,bio,priv) VALUES ("'+request.json['first']+'","'+request.json['last']+'","'+request.json['email']+'","'+(hashlib.sha256(request.json['password'].encode('utf-8')).hexdigest())+'","","comment")')
+            except Exception as e:
+                return 'error'
             try:
                 os.mkdir('filmfest/server/users/'+str(query_db('select id from users where email="'+request.json['email']+'"')[0][0]))
-            except:
+            except Exception as e:
+                print(str(e) +'why')
                 #TODO MAYBE HANDLING HERE BUT ASSUMING THIS IS JUST BECAUSE ACCOUNT DELETED FROM TABLE BUT ACCOUNTS SHOULD NEVER BE DELETED IT WOULD SHIFT EVERYTHING DOWN
                 pass
             return 'created'
@@ -170,7 +176,7 @@ def editprofile():
 @app.route("/videouploadpre", methods=["POST"])
 def videouploadpre():
     if(authorized(request.json['userid'],request.json['userkey'])):
-        return json.dumps([query_db('select id,name from projects where enabled="yes"')] + [query_db('select id,name from groups where type="class"')])
+        return json.dumps([query_db('select id,name,class from projects where enabled="yes"')] + [query_db('select id,name from groups where type="class"')])
     else:
         return "unauthorized"
 
@@ -182,6 +188,11 @@ def postvideo():
         path = "filmfest/server/users/" + str(request.form['userid']) + "/" + str(videoid) + ".mp4"
         request.files["file"].save(path)
         execute_db('insert into videos (owner,path,views,project,class,description,title) values ("'+request.form['userid']+'","'+path+'","0","'+request.form['project']+'","'+request.form['class']+'","'+request.form['description']+'","'+request.form['title']+'")')
+        
+        os.system(
+            "ffmpeg -ss 00:00:01 -i "+path+" -frames:v 1 -q:v 2 filmfest/server/users/"+str(request.form['userid']) + "/" + str(videoid)+ ".jpg"
+        )
+        
         return str(videoid)
     else:
         return "unauthorized"
@@ -193,7 +204,7 @@ def videodata():
         
         owner = getownerdata(videorow[1])
 
-        location = 'http://127.0.0.1:5000/' + str(videorow[2][9:])
+        location = 'http://192.168.50.80:5000/' + str(videorow[2][9:])
         views = videorow[3]
 
         tags = []
@@ -244,7 +255,7 @@ def getreccomendations():
                 finalist.append({
                     "id":item[0],
                     "owner":getownerdata(item[1]), #THIS TURN INTO ITS OWN ARRAY
-                    "thumb":'http://127.0.0.1:5000/' + str(item[2][9:]) +"#t=1",
+                    "thumb":'http://192.168.50.80:5000/server/users/' + str(item[1]) + '/' + str(item[0]) +".jpg",
                     "views":item[3],
                     "title":item[4],
                 })
@@ -261,7 +272,7 @@ def getreccomendations():
                 finalist.append({
                     "id":item[0],
                     "owner":getownerdata(item[1]), #THIS TURN INTO ITS OWN ARRAY
-                    "thumb":'http://127.0.0.1:5000/' + str(item[2][9:]) +"#t=1",
+                    "thumb":'http://192.168.50.80:5000/server/users/' + str(item[1]) + '/' + str(item[0]) +".jpg",
                     "views":item[3],
                     "title":item[4],
                 })
@@ -304,9 +315,9 @@ def pdata():
 
 
         if(profiledata[0][4] == None):
-            data.update(pfp="http://127.0.0.1:5000/users/defualt/pfp.jpeg")
+            data.update(pfp="http://192.168.50.80:5000/users/defualt/pfp.jpeg")
         else:
-            data.update(pfp="http://127.0.0.1:5000/users/"+request.json['profileid']+"/pfp."+str(profiledata[0][4]))
+            data.update(pfp="http://192.168.50.80:5000/users/"+request.json['profileid']+"/pfp."+str(profiledata[0][4]))
         
         items = query_db('select id,owner,path,views,title from videos where owner="'+request.json['profileid']+'"')
         finalist=[]
@@ -314,7 +325,7 @@ def pdata():
             finalist.append({
                 "id":item[0],
                 "owner":getownerdata(item[1]), #THIS TURN INTO ITS OWN ARRAY
-                "thumb":'http://127.0.0.1:5000/' + str(item[2][9:]) +"#t=1",
+                "thumb":'http://192.168.50.80:5000/server/users/' + str(item[1]) + '/' + str(item[0]) +".jpg",
                 "views":item[3],
                 "title":item[4],
             })
@@ -366,4 +377,4 @@ def userlist(): #THIS WILL NEED REDONE FOR SEARCH TERMS AND OTHER BS AND WHETHER
 
 
 if __name__ == '__main__':
-    app.run(host='127.0.0.1', use_reloader=True, port=5000, threaded=True, debug=True)
+    app.run(host='192.168.50.80', use_reloader=True, port=5000, threaded=True, debug=True)

@@ -38,7 +38,7 @@ class Edit extends React.Component{
         if(data['first'].trim().length !== 0 && data['last'].trim().length !== 0){
             filexhr(this.state.selectedFile,data,'editprofile').then((response) => {
                 if(response === 'done'){
-                    window.location.href = "http://localhost:3000/user/" + window.localStorage.getItem('gerdyid');
+                    window.location.href = "http://192.168.50.80:3000/user/" + window.localStorage.getItem('gerdyid');
                 }
                 else if(response === 'unauthorized'){
                     alert('You are unauthorized for this action');
@@ -60,7 +60,7 @@ class Edit extends React.Component{
                     //alert(typeof JSON.parse(response))
                     if(response === 'unauthorized'){
                         window.localStorage.clear();
-                        window.location.href = "http://localhost:3000/login";
+                        window.location.href = "http://192.168.50.80:3000/login";
                     }
                     else if(response === 'notexist'){
                         this.setState({ profiledata: "notexist" });
@@ -73,7 +73,7 @@ class Edit extends React.Component{
         }
         else{
             //alert('You are not permitted to edit this profile.')
-            window.location.href = "http://localhost:3000/user/" + window.localStorage.getItem('gerdyid') + '/edit';
+            window.location.href = "http://192.168.50.80:3000/user/" + window.localStorage.getItem('gerdyid') + '/edit';
         }
 
     }

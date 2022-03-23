@@ -8,12 +8,9 @@ export default function Videochoice(props){
     const thumbnail=props.info["thumb"];
     const views=props.info["views"];
     return(
-        <div onClick={() => {window.location.href = "http://localhost:3000/watch/"+id}} className='videochoice level2'>
+        <div onClick={() => {window.location.href = "http://192.168.50.80:3000/watch/"+id}} className='videochoice level2'>
             <div className='videothumb'>
-                <video id="video" className="thumb" preload='metadata'>
-                    <source src={thumbnail} type="video/mp4"></source>
-                    Your browser does not support the video tag.
-                </video>
+                <img className='thumb' src={thumbnail}/>
             </div>
             <p className='titletext'>{title}</p>
             <p className='viewschoice'>{views + ' views'}</p>

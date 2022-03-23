@@ -15,7 +15,8 @@ class Upload extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            profiledata: null,
+            allprojects: null,
+            projects: [],
             classdata:null,
             selectedFile:null,
             selectedProject:null,
@@ -35,6 +36,18 @@ class Upload extends React.Component{
 
     handleClassSelect = (value) => {
         this.setState({selectedClass: value});
+        //this.setState({projects: this.state.allprojects});
+        //var list = []
+        //for (const item in this.state.allprojects){
+        //    console.log(this.state.allprojects[item][2],value)
+        //    if(this.state.allprojects[item][2] === value){
+        //        list.push(this.state.allprojects[item])
+        //        console.log('pushed')
+        //    }
+        //}
+        //this.setState({projects:list})
+        //alert(this.state.projects)
+        //this.setState({projects: Object.keys(this.state.allprojects).filter(x => this.state.allprojects[x] === value[0])});
     }
 
     onUpload = () => {
@@ -55,7 +68,7 @@ class Upload extends React.Component{
                         alert('You are unauthorized for this action');
                     }
                     else{
-                        window.location.href = "http://localhost:3000/watch/" + response;
+                        window.location.href = "http://192.168.50.80:3000/watch/" + response;
                     }
                 })
             }
@@ -75,10 +88,11 @@ class Upload extends React.Component{
                 //alert(typeof JSON.parse(response))
                 if(response === 'unauthorized'){
                     window.localStorage.clear();
-                    window.location.href = "http://localhost:3000/login";
+                    window.location.href = "http://192.168.50.80:3000/login";
                 }
                 else{
-                    this.setState({ profiledata: JSON.parse(response)[0]});
+                    //this.setState({ allprojects: JSON.parse(response)[0]});
+                    this.setState({ projects: JSON.parse(response)[0]});
                     this.setState({ classdata: JSON.parse(response)[1]});
                 }
             }
@@ -102,11 +116,11 @@ class Upload extends React.Component{
                                 <textarea id="title" maxLength="70" placeholder='Video Title' className="level1" type="text"/>
                                 <textarea id="description" maxLength="200" placeholder='Video Credits and Description' className="level1" type="text"/>
                                 
-                                <h3>Select Project:</h3>
-                                <ListContainer type="checkbox" recieveSelections={this.handleProjectSelect} content={this.state.profiledata}/>
-                                
                                 <h3>Select Class:</h3>
-                                <ListContainer type="checkbox" recieveSelections={this.handleClassSelect} content={this.state.classdata}/>
+                                <ListContainer type="radio" recieveSelections={this.handleClassSelect} content={this.state.classdata}/>
+
+                                <h3>Select Project:</h3>
+                                <ListContainer type="radio" recieveSelections={this.handleProjectSelect} content={this.state.projects}/>
     
                                 <a onClick={this.onUpload} type="submit" className="level1 UploadBtn">
                                     <h3 className='uploadtxt'>Upload</h3>
@@ -125,7 +139,7 @@ class Upload extends React.Component{
         }
         else{
             window.localStorage.clear();
-            window.location.href = "http://localhost:3000/login";
+            window.location.href = "http://192.168.50.80:3000/login";
         }
     }
 }

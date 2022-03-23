@@ -23,7 +23,7 @@ class RealUser extends React.Component{
                 //alert(typeof JSON.parse(response))
                 if(response === 'unauthorized'){
                     window.localStorage.clear();
-                    window.location.href = "http://localhost:3000/login";
+                    window.location.href = "http://192.168.50.80:3000/login";
                 }
                 else if(response === 'notexist'){
                     this.setState({ profiledata: "notexist" });

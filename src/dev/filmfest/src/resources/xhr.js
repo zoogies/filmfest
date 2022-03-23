@@ -1,7 +1,7 @@
 export default function basicxhr(route,data){
     return new Promise(function (resolve, reject) {
         var xhr = new XMLHttpRequest();
-        xhr.open("POST", "http://127.0.0.1:5000/"+route);
+        xhr.open("POST", "http://192.168.50.80:5000/"+route);
         xhr.setRequestHeader("Accept","apllication/json");
         xhr.setRequestHeader("Content-Type","application/json");
         xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
@@ -43,7 +43,7 @@ export function filexhr(file,data,route){
         //formData.append('bio', data['bio']);
 
         var xhr = new XMLHttpRequest();
-        xhr.open('POST', 'http://127.0.0.1:5000/'+route, true);
+        xhr.open('POST', 'http://192.168.50.80:5000/'+route, true);
 
         xhr.onload = function () {
             if (this.status >= 200 && this.status < 300) {
