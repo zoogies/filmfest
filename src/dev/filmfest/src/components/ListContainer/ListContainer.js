@@ -2,13 +2,13 @@ import './ListContainer.css';
 import '../../resources/Shared.css';
 import React from 'react';
 
-export default function ListContainer(props){
-    return(
-        <TrueListContainer recieveSelections={props.recieveSelections} content={props.content} type={props.type}/>
-    )
-}
+//export default function ListContainer(props){
+//    return(
+//        <TrueListContainer recieveSelections={props.recieveSelections} content={props.content} type={props.type}/>
+//    )
+//}
 
-class TrueListContainer extends React.Component{
+export default class ListContainer extends React.Component{
     constructor(props){
         super(props);
         this.state = {

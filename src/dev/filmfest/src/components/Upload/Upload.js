@@ -36,18 +36,15 @@ class Upload extends React.Component{
 
     handleClassSelect = (value) => {
         this.setState({selectedClass: value});
-        //this.setState({projects: this.state.allprojects});
-        //var list = []
-        //for (const item in this.state.allprojects){
-        //    console.log(this.state.allprojects[item][2],value)
-        //    if(this.state.allprojects[item][2] === value){
-        //        list.push(this.state.allprojects[item])
-        //        console.log('pushed')
+
+        //var list=[]
+        //for(var project in this.state.allprojects){
+        //    if(this.state.allprojects[project][2] === value[0].toString()){
+        //        list.push(this.state.allprojects[project])
         //    }
         //}
-        //this.setState({projects:list})
-        //alert(this.state.projects)
-        //this.setState({projects: Object.keys(this.state.allprojects).filter(x => this.state.allprojects[x] === value[0])});
+        //console.log(list)
+        //this.setState({projects: list});
     }
 
     onUpload = () => {
@@ -92,8 +89,9 @@ class Upload extends React.Component{
                 }
                 else{
                     //this.setState({ allprojects: JSON.parse(response)[0]});
-                    this.setState({ projects: JSON.parse(response)[0]});
-                    this.setState({ classdata: JSON.parse(response)[1]});
+                    this.setState({ allprojects: JSON.parse(response)['projects']});
+                    this.setState({ projects: JSON.parse(response)['projects']});
+                    this.setState({ classdata: JSON.parse(response)['classes']});
                 }
             }
         );
@@ -102,7 +100,7 @@ class Upload extends React.Component{
     render(){
         const priv = window.localStorage.getItem('gerdypriv');
         if(priv === 'admin' || priv === 'dev' || priv === 'verified'){
-            if(this.state.profiledata !== null && this.state.profiledata !== 'notexist' && this.state.classdata !== null && this.state.uploading === false){
+            if(this.state.allprojects !== null && this.state.allprojects !== 'notexist' && this.state.classdata !== null && this.state.uploading === false){
                 return(
                     <div className="uploadTop">
                         <div className="uploadPanel level2">
@@ -120,7 +118,7 @@ class Upload extends React.Component{
                                 <ListContainer type="radio" recieveSelections={this.handleClassSelect} content={this.state.classdata}/>
 
                                 <h3>Select Project:</h3>
-                                <ListContainer type="radio" recieveSelections={this.handleProjectSelect} content={this.state.projects}/>
+                                <ListContainer /*key={this.state.projects}*/ type="radio" recieveSelections={this.handleProjectSelect} content={this.state.projects}/>
     
                                 <a onClick={this.onUpload} type="submit" className="level1 UploadBtn">
                                     <h3 className='uploadtxt'>Upload</h3>

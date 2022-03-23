@@ -176,7 +176,11 @@ def editprofile():
 @app.route("/videouploadpre", methods=["POST"])
 def videouploadpre():
     if(authorized(request.json['userid'],request.json['userkey'])):
-        return json.dumps([query_db('select id,name,class from projects where enabled="yes"')] + [query_db('select id,name from groups where type="class"')])
+        finalreturn = {
+            "classes":query_db('select id,name from groups where type="class"'),
+            "projects":query_db('select id,name,class from projects where enabled="yes"'),
+        }
+        return json.dumps(finalreturn)
     else:
         return "unauthorized"
 
@@ -192,7 +196,7 @@ def postvideo():
         os.system(
             "ffmpeg -ss 00:00:01 -i "+path+" -frames:v 1 -q:v 2 filmfest/server/users/"+str(request.form['userid']) + "/" + str(videoid)+ ".jpg"
         )
-        
+
         return str(videoid)
     else:
         return "unauthorized"
