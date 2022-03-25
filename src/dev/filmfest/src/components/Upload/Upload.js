@@ -114,6 +114,9 @@ class Upload extends React.Component{
                                 <textarea id="title" maxLength="70" placeholder='Video Title' className="level1" type="text"/>
                                 <textarea id="description" maxLength="200" placeholder='Video Credits and Description' className="level1" type="text"/>
                                 
+                                <h3>Enter school year range:</h3>
+                                <input type="text"></input>
+
                                 <h3>Select Class:</h3>
                                 <ListContainer type="radio" recieveSelections={this.handleClassSelect} content={this.state.classdata}/>
 
