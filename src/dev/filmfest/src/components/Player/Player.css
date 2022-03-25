@@ -77,3 +77,14 @@
     margin: 0px;
     margin-bottom: 10px;
 }
+
+.statusrow{
+    display: flex;
+    flex-direction: row;
+}
+
+.year{
+    margin-top: 0px;
+    margin-bottom: 3px;
+    margin-left: 20px;
+}

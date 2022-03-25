@@ -21,6 +21,17 @@ function TagWrapper(props){
     }
 }
 
+function Year(props){
+    if(props.year.trim().length !== 0){
+        return(
+            <p className="year">{'Year: ' + props.year.substring(0,2) + '-' + props.year.substring(2,4)}</p>
+        )
+    } 
+    else{
+        return(<></>)
+    }
+}
+
 export default class Player extends React.Component{
     constructor(props){
         super(props);
@@ -43,7 +54,7 @@ export default class Player extends React.Component{
         );
     }
 
-    render(){
+    render(){ //TODO copy pasting the same code is lazy just think of a better way to check this value
         if(this.state.videodata !== null){
             return(
                 <div className="player">
@@ -54,7 +65,10 @@ export default class Player extends React.Component{
                         </video>
                         <div className="videoinfo level2">
                             <h1 className="title">{this.state.videodata['title']}</h1>
-                            <p className="views">{this.state.videodata['views'] + ' views'}</p>
+                            <div className="statusrow">
+                                <p className="views">{this.state.videodata['views'] + ' views'}</p>
+                                <Year year={this.state.videodata['year']}/>
+                            </div>
                             <p className="description">{this.state.videodata['description']}</p>
                             <MiniProfile data={this.state.videodata['owner']}/>
                             

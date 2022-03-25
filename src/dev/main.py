@@ -191,7 +191,7 @@ def postvideo():
         videoid = query_db('select count(*) from videos')[0][0] + 1
         path = "filmfest/server/users/" + str(request.form['userid']) + "/" + str(videoid) + ".mp4"
         request.files["file"].save(path)
-        execute_db('insert into videos (owner,path,views,project,class,description,title) values ("'+request.form['userid']+'","'+path+'","0","'+request.form['project']+'","'+request.form['class']+'","'+request.form['description']+'","'+request.form['title']+'")')
+        execute_db('insert into videos (owner,path,views,project,class,description,title,year) values ("'+request.form['userid']+'","'+path+'","0","'+request.form['project']+'","'+request.form['class']+'","'+request.form['description']+'","'+request.form['title']+'","'+request.form['year']+'")')
         
         os.system(
             "ffmpeg -ss 00:00:01 -i "+path+" -frames:v 1 -q:v 2 filmfest/server/users/"+str(request.form['userid']) + "/" + str(videoid)+ ".jpg"
@@ -231,6 +231,7 @@ def videodata():
 
         title = videorow[7]
         description = videorow[6]
+        year = videorow[8]
 
         videodata = {
             "owner":owner,
@@ -239,6 +240,7 @@ def videodata():
             "tags":tags,
             "title":title,
             "description":description,
+            "year":year,
         }
 
         execute_db('update videos set views="'+str(int(views) + 1) + '" where id="'+request.json['videoid']+'"')

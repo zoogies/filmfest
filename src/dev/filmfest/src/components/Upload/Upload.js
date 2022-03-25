@@ -55,24 +55,46 @@ class Upload extends React.Component{
             "description":document.getElementById('description').value,
             "project":this.state.selectedProject,
             "class":this.state.selectedClass,
+            //year will be stored as the two numbers concatenated
+            //that way the value can be sorted and searched easily
+            "year":""
         }
 
         if(data['title'].trim().length !== 0){
             if(this.state.selectedFile != null){
-                this.setState({uploading: true});
-                filexhr(this.state.selectedFile,data,'postvideo').then((response) => {
-                    if(response === 'unauthorized'){
-                        alert('You are unauthorized for this action');
+                const yearset = (document.getElementById('year').value);
+                if(yearset.trim().length !== 0){
+                    if(yearset.trim().length === 5 && Number.isInteger(Number(yearset.split('-')[0])) && Number.isInteger(Number(yearset.split('-')[1]))){ //flag for validating school year
+                        data.year = yearset.split('-')[0] + yearset.split('-')[1]
+                        this.setState({uploading: true});
+                        filexhr(this.state.selectedFile,data,'postvideo').then((response) => {
+                            if(response === 'unauthorized'){
+                                alert('You are unauthorized for this action');
+                            }
+                            else{
+                                window.location.href = "http://192.168.50.80:3000/watch/" + response;
+                            }
+                        })
                     }
                     else{
-                        window.location.href = "http://192.168.50.80:3000/watch/" + response;
+                        alert('The optional school year value needs to be formatted correctly. (last two digits of years seperated by a dash)')
                     }
-                })
+                }
+                else{
+                    this.setState({uploading: true});
+                    filexhr(this.state.selectedFile,data,'postvideo').then((response) => {
+                        if(response === 'unauthorized'){
+                            alert('You are unauthorized for this action');
+                        }
+                        else{
+                            window.location.href = "http://192.168.50.80:3000/watch/" + response;
+                        }
+                    })
+                }
             }
             else{
                 alert('You need to select a mp4 video to upload.')
             }
-
         }
         else{
             alert('You need to set a title.')
@@ -114,8 +136,8 @@ class Upload extends React.Component{
                                 <textarea id="title" maxLength="70" placeholder='Video Title' className="level1" type="text"/>
                                 <textarea id="description" maxLength="200" placeholder='Video Credits and Description' className="level1" type="text"/>
                                 
-                                <h3>Enter school year range:</h3>
-                                <input type="text"></input>
+                                <h3>School year: (ex: 21-22)</h3>
+                                <input id="year" type="text" maxLength="5" className='level1' placeholder='XX-XX'></input>
 
                                 <h3>Select Class:</h3>
                                 <ListContainer type="radio" recieveSelections={this.handleClassSelect} content={this.state.classdata}/>
