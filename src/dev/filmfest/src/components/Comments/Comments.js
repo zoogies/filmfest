@@ -2,6 +2,7 @@ import '../../resources/Shared.css';
 import './Comments.css'
 import Comment from "../Comment/Comment";
 
+//pagization of everything can wait until gerdy decides he wants it
 export default function Comments(){
     //initialize comment list and modify the list after request async 
     //this can be used to update content easily after page scroll
