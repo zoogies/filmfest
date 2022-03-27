@@ -173,6 +173,26 @@ def editprofile():
     else:
         return "unauthorized"
 
+#MAKE SURE POST COMMENT ROUTE AUTHENTICATED
+
+@app.route("/getvideoratings", methods=["POST"])
+def getvideocomments():
+    raw = query_db('select * from ratings where videoid="'+request.json['videoid']+'" order by id desc limit 10')
+    #print(raw)
+    comments = []
+
+    for comment in raw:
+        #print(comment)
+        c = {
+            "id": str(comment[0]),
+            "rating":comment[3],
+            "owner":getownerdata(comment[2])
+        }
+        comments.append(c)
+
+
+    return json.dumps(comments)
+
 @app.route("/videouploadpre", methods=["POST"])
 def videouploadpre():
     if(authorized(request.json['userid'],request.json['userkey'])):
@@ -233,6 +253,20 @@ def videodata():
         description = videorow[6]
         year = videorow[8]
 
+        ratings = query_db('select stars from ratings where videoid="'+request.json['videoid']+'"')
+        averagerating = 0
+        numratings = 0
+        for rating in ratings:
+            averagerating += rating[0]
+            numratings+=1
+            #print('average',averagerating,'num',numratings)
+        try:
+            averagerating /= numratings
+        except:
+            pass
+        #print('real average',averagerating)
+
+
         videodata = {
             "owner":owner,
             "location":location,
@@ -241,6 +275,8 @@ def videodata():
             "title":title,
             "description":description,
             "year":year,
+            "averagerating":round(averagerating),
+            "numratings":(numratings),
         }
 
         execute_db('update videos set views="'+str(int(views) + 1) + '" where id="'+request.json['videoid']+'"')

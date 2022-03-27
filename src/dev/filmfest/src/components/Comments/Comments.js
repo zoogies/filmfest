@@ -1,29 +1,70 @@
 import '../../resources/Shared.css';
 import './Comments.css'
 import Comment from "../Comment/Comment";
+import React from 'react';
+import basicxhr from '../../resources/xhr';
 
-//pagization of everything can wait until gerdy decides he wants it
-export default function Comments(){
-    //initialize comment list and modify the list after request async 
-    //this can be used to update content easily after page scroll
-    const comments = [
-        {"name":"commentor","content":"i am making a comment rn","pfp":"https://media.discordapp.net/attachments/682005199132688450/950756784174403624/IMG_7551.png"},
-        {"name":"ryan","content":"wow this website is so awesome i might just write a whole paragraph about how awesome it is im not crazy there are no bugs under my skin i am perfectly sane","pfp":"https://media.discordapp.net/attachments/682005199132688450/950756784174403624/IMG_7551.png"},
-        {"name":"van","content":"balls i am van i love to say balls hahahah balls","pfp":"https://media.discordapp.net/attachments/682005199132688450/950756784174403624/IMG_7551.png"},
-        {"name":"sabby","content":"wow i am an absolute debby downer as always this sucks so much i hate everything waaaah waaaaah waaaah","pfp":"https://media.discordapp.net/attachments/682005199132688450/950756784174403624/IMG_7551.png"},
-        {"name":"zach","content":"i am zach and i am concerningly optimistic about the","pfp":"https://media.discordapp.net/attachments/682005199132688450/950756784174403624/IMG_7551.png"},
-    ]
+export default class Comments extends React.Component{
+    constructor(props){
+        super(props);
+        this.state = {
+            videoid: props.videoid,
+            commentdata:null,
+            //STARTING STATE VARIABLES DETERMINE THE SEARCH VARS
+        }
+    }
 
-    return(
-        <div className="level2 comments">
-            <h1 className='commentstext'>Comments:</h1>
-            <div className='commentbox'>
-                {
-                comments.map(function(comment){
-                    return <Comment key={comment["content"]} comment={comment}/>
-                })
+    componentDidMount(){
+        basicxhr("getvideoratings",{"videoid":this.state.videoid}).then(
+            (response) => {
+                this.setState({commentdata:JSON.parse(response)});
             }
+        );
+    }
+
+    render(){
+        if(this.state.commentdata !== null){
+            return(
+                <Commentlayout content={this.state.commentdata}/>
+            )
+        }
+        else{
+            return (
+                <div className="level2 comments">
+                        <h1>Loading Ratings</h1>
+                </div>
+                //TODO UPDATE THIS LOADING ICON REALLL!!!
+            )
+        }
+    }
+}
+
+function Commentlayout(props){
+    console.log(props.content[0])
+    if(props.content[0] !== undefined){
+        return(
+            <div className="level2 comments">
+                <h1 className='commentstext'>Recent Ratings:</h1>
+                <div className='commentbox'>
+                    {
+                    props.content.map((comment) =>{
+                        return( <Comment key={comment['id']} comment={comment}/> )
+                    })
+                    }
+                </div>
             </div>
-        </div>
-    )
+        )
+    }
+    else{
+        //TODO be the first to rate and css not look like shit
+        return (
+            <div className="level2 comments">
+                <h1 className='commentstext'>Recent Ratings:</h1>
+                <div className='commentbox'>
+                    <h1>No Ratings!</h1> 
+                </div>
+            </div>
+        )
+    }
+    
 }

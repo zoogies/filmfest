@@ -76,6 +76,7 @@
 .description{
     margin: 0px;
     margin-bottom: 10px;
+    padding-left: 10px;
 }
 
 .statusrow{
@@ -87,4 +88,32 @@
     margin-top: 0px;
     margin-bottom: 3px;
     margin-left: 20px;
+}
+
+.metastars{
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+.titleviewsdate{
+    display: flex;
+    flex-direction: column;
+}
+
+.videostars{
+    display: flex;
+    align-self: center;
+    justify-self: flex-end;
+    justify-content: flex-end;
+    margin-left: auto;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+.ratingnum{
+    margin: 0px;
+    text-align: center;
 }

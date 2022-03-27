@@ -1,19 +1,13 @@
 import './Comment.css'
 import '../../resources/Shared.css'
+import MiniProfile from '../MiniProfile/MiniProfile';
+import Stars from '../Stars/Stars';
 
 export default function Comment(props){
-    const name=props.comment["name"];
-    const content=props.comment["content"];
-    const pfp=props.comment["pfp"];
     return(
         <div className='comment level1'>
-            <div className='compfp'>
-                <img className='compfpimg' src={pfp}/>
-            </div>
-            <div className='content'>
-                <h2 className='username'>{name}</h2>
-                <p className='commentbody'>{content}</p>
-            </div>
+            <MiniProfile data={props.comment['owner']}/>
+            <Stars rating={props.comment['rating']}/>
         </div>
     )
 }

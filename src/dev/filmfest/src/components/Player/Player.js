@@ -6,6 +6,7 @@ import MiniProfile from "../MiniProfile/MiniProfile"
 import React from "react"
 import basicxhr from "../../resources/xhr";
 import TagBox from "../TagBox/TagBox"
+import Stars from "../Stars/Stars"
 
 function TagWrapper(props){
     if(props.tags[0] !== undefined){
@@ -64,12 +65,24 @@ export default class Player extends React.Component{
                             Your browser does not support the video tag.
                         </video>
                         <div className="videoinfo level2">
-                            <h1 className="title">{this.state.videodata['title']}</h1>
-                            <div className="statusrow">
-                                <p className="views">{this.state.videodata['views'] + ' views'}</p>
-                                <Year year={this.state.videodata['year']}/>
+                            <div className="metastars">
+                                <div className="titleviewsdate">
+                                    <h1 className="title">{this.state.videodata['title']}</h1>
+                                    <div className="statusrow">
+                                        <p className="views">{this.state.videodata['views'] + ' views'}</p>
+                                        <Year year={this.state.videodata['year']}/>
+                                    </div>
+                                </div>
+                                <div className="videostars">
+                                    <Stars rating={this.state.videodata['averagerating']}/>
+                                    <p className="ratingnum">stars out of {this.state.videodata['numratings']} ratings</p>
+                                </div>
                             </div>
+                            
+                            
+
                             <p className="description">{this.state.videodata['description']}</p>
+                            
                             <MiniProfile data={this.state.videodata['owner']}/>
                             
                             <TagWrapper tags={this.state.videodata['tags']}/>
@@ -78,7 +91,7 @@ export default class Player extends React.Component{
                             <Recommendations/>
                         </div>
                     </div>
-                    <Comments/>
+                    <Comments videoid={this.state.videoid}/>
                 </div>
             )
         }
