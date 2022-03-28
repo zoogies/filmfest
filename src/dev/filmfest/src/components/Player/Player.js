@@ -7,6 +7,7 @@ import React from "react"
 import basicxhr from "../../resources/xhr";
 import TagBox from "../TagBox/TagBox"
 import Stars from "../Stars/Stars"
+import { commatize } from "../../resources/misc"
 
 function TagWrapper(props){
     if(props.tags[0] !== undefined){
@@ -55,7 +56,7 @@ export default class Player extends React.Component{
         );
     }
 
-    render(){ //TODO copy pasting the same code is lazy just think of a better way to check this value
+    render(){
         if(this.state.videodata !== null){
             return(
                 <div className="player">
@@ -69,13 +70,13 @@ export default class Player extends React.Component{
                                 <div className="titleviewsdate">
                                     <h1 className="title">{this.state.videodata['title']}</h1>
                                     <div className="statusrow">
-                                        <p className="views">{this.state.videodata['views'] + ' views'}</p>
+                                        <p className="views">{ commatize(this.state.videodata['views']) + ' views'}</p>
                                         <Year year={this.state.videodata['year']}/>
                                     </div>
                                 </div>
                                 <div className="videostars">
                                     <Stars rating={this.state.videodata['averagerating']}/>
-                                    <p className="ratingnum">stars out of {this.state.videodata['numratings']} ratings</p>
+                                    <p className="ratingnum">stars out of { commatize(this.state.videodata['numratings'])} ratings</p>
                                 </div>
                             </div>
                             

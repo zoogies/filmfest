@@ -1,12 +1,13 @@
 import './Videochoice.css';
 import '../../resources/Shared.css';
 import MiniProfile from '../MiniProfile/MiniProfile';
+import { commatize } from '../../resources/misc';
 
 export default function Videochoice(props){
     const id=props.info["id"];
     const title=props.info["title"];
     const thumbnail=props.info["thumb"];
-    const views=props.info["views"];
+    const views= commatize(props.info["views"]);
     return(
         <div onClick={() => {window.location.href = "http://localhost:3000/watch/"+id}} className='videochoice level2'>
             <div className='videothumb'>
