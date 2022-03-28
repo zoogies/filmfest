@@ -6,15 +6,15 @@ import '../../resources/Shared.css'
 export default function MiniProfile(props){
     return(
             <div className="profileSmall level1" onClick={()=>{
-                window.location.href = "http://192.168.50.80:3000/user/"+props.data['id'];
+                window.location.href = "http://localhost:3000/user/"+props.data['id'];
             }}>
             <div className='circle'>
                 {(()=>{
                     if(props.data['pfp'] == null){
-                        return <img className='profilePreviewSmall' alt="" src={"http://192.168.50.80:5000/users/defualt/pfp.jpeg"}/>
+                        return <img className='profilePreviewSmall' alt="" src={"http://127.0.0.1:5000/users/defualt/pfp.jpeg"}/>
                     }
                     else{
-                        return <img className='profilePreviewSmall' alt="" src={"http://192.168.50.80:5000/users/"+props.data['id']+"/pfp."+props.data['pfp']}/>
+                        return <img className='profilePreviewSmall' alt="" src={"http://127.0.0.1:5000/users/"+props.data['id']+"/pfp."+props.data['pfp']}/>
                     }
                 })()}
 

@@ -241,7 +241,7 @@ def videodata():
         
         owner = getownerdata(videorow[1])
 
-        location = 'http://192.168.50.80:5000/' + str(videorow[2][9:])
+        location = 'http://127.0.0.1:5000/' + str(videorow[2][9:])
         views = videorow[3]
 
         tags = []
@@ -310,7 +310,7 @@ def getreccomendations():
                 finalist.append({
                     "id":item[0],
                     "owner":getownerdata(item[1]), #THIS TURN INTO ITS OWN ARRAY
-                    "thumb":'http://192.168.50.80:5000/server/users/' + str(item[1]) + '/' + str(item[0]) +".jpg",
+                    "thumb":'http://127.0.0.1:5000/server/users/' + str(item[1]) + '/' + str(item[0]) +".jpg",
                     "views":item[3],
                     "title":item[4],
                 })
@@ -327,7 +327,7 @@ def getreccomendations():
                 finalist.append({
                     "id":item[0],
                     "owner":getownerdata(item[1]), #THIS TURN INTO ITS OWN ARRAY
-                    "thumb":'http://192.168.50.80:5000/server/users/' + str(item[1]) + '/' + str(item[0]) +".jpg",
+                    "thumb":'http://127.0.0.1:5000/server/users/' + str(item[1]) + '/' + str(item[0]) +".jpg",
                     "views":item[3],
                     "title":item[4],
                 })
@@ -370,9 +370,9 @@ def pdata():
 
 
         if(profiledata[0][4] == None):
-            data.update(pfp="http://192.168.50.80:5000/users/defualt/pfp.jpeg")
+            data.update(pfp="http://127.0.0.1:5000/users/defualt/pfp.jpeg")
         else:
-            data.update(pfp="http://192.168.50.80:5000/users/"+request.json['profileid']+"/pfp."+str(profiledata[0][4]))
+            data.update(pfp="http://127.0.0.1:5000/users/"+request.json['profileid']+"/pfp."+str(profiledata[0][4]))
         
         items = query_db('select id,owner,path,views,title from videos where owner="'+request.json['profileid']+'"')
         finalist=[]
@@ -380,7 +380,7 @@ def pdata():
             finalist.append({
                 "id":item[0],
                 "owner":getownerdata(item[1]), #THIS TURN INTO ITS OWN ARRAY
-                "thumb":'http://192.168.50.80:5000/server/users/' + str(item[1]) + '/' + str(item[0]) +".jpg",
+                "thumb":'http://127.0.0.1:5000/server/users/' + str(item[1]) + '/' + str(item[0]) +".jpg",
                 "views":item[3],
                 "title":item[4],
             })
@@ -432,4 +432,4 @@ def userlist(): #THIS WILL NEED REDONE FOR SEARCH TERMS AND OTHER BS AND WHETHER
 
 
 if __name__ == '__main__':
-    app.run(host='192.168.50.80', use_reloader=True, port=5000, threaded=True, debug=True)
+    app.run(host='127.0.0.1', use_reloader=True, port=5000, threaded=True, debug=True)

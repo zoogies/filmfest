@@ -48,7 +48,7 @@ export default function Stars(props){
             </div>
         )
     }
-    else if(props.rating === 3){
+    else if(props.rating === 4){
         return(
             <div>
                 <BsStarFill size={40} color="#e3a70e"/>

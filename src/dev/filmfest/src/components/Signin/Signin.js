@@ -39,14 +39,14 @@ export default function Signin(){
                                 window.localStorage.setItem('gerdyexpires',expires);
                                 window.localStorage.setItem('gerdyid',id);
                                 window.localStorage.setItem('gerdypriv',priv);
-                                window.location.href = "http://192.168.50.80:3000/browse";
+                                window.location.href = "http://localhost:3000/browse";
                             }
                         }
                     )
 
                 }} className='level1 loginbtn'>Log In</button>
             </div>
-            <button onClick={()=>{window.location.href = "http://192.168.50.80:3000/signup";}} className='level1 signupbtn'>Sign Up</button>
+            <button onClick={()=>{window.location.href = "http://localhost:3000/signup";}} className='level1 signupbtn'>Sign Up</button>
             </div>
         </div>
     )

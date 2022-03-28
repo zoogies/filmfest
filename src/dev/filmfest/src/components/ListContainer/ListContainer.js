@@ -32,9 +32,10 @@ export default class ListContainer extends React.Component{
             this.props.recieveSelections(this.state.selected);
         }
         else if(this.state.type === 'radio'){
-            const fakelist = [e[0]];
+            const fakelist = [ e[0] ];
+
             this.setState({selected: fakelist});
-            this.props.recieveSelections(this.state.selected);
+            this.props.recieveSelections(fakelist); //NOTE: SWITCHED WITH NORMAL STATE BECAUSE IT DOESENT WORK????? WHY??? HELLOOO??? REACTJS WHAT IS WRONG WITH YOU????
         }
     }
 

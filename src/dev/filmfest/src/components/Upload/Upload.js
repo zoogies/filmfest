@@ -72,7 +72,7 @@ class Upload extends React.Component{
                                 alert('You are unauthorized for this action');
                             }
                             else{
-                                window.location.href = "http://192.168.50.80:3000/watch/" + response;
+                                window.location.href = "http://localhost:3000/watch/" + response;
                             }
                         })
                     }
@@ -87,7 +87,7 @@ class Upload extends React.Component{
                             alert('You are unauthorized for this action');
                         }
                         else{
-                            window.location.href = "http://192.168.50.80:3000/watch/" + response;
+                            window.location.href = "http://localhost:3000/watch/" + response;
                         }
                     })
                 }
@@ -107,7 +107,7 @@ class Upload extends React.Component{
                 //alert(typeof JSON.parse(response))
                 if(response === 'unauthorized'){
                     window.localStorage.clear();
-                    window.location.href = "http://192.168.50.80:3000/login";
+                    window.location.href = "http://localhost:3000/login";
                 }
                 else{
                     //this.setState({ allprojects: JSON.parse(response)[0]});
@@ -162,7 +162,7 @@ class Upload extends React.Component{
         }
         else{
             window.localStorage.clear();
-            window.location.href = "http://192.168.50.80:3000/login";
+            window.location.href = "http://localhost:3000/login";
         }
     }
 }

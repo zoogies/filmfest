@@ -21,7 +21,7 @@ export default class AdminPanel extends React.Component{
         //double check user didnt just type some BS in to get here
         if(window.localStorage.getItem('gerdypriv') !== 'admin' && window.localStorage.getItem('gerdypriv') !== 'dev'){
             window.localStorage.clear();
-            window.location.href = "http://192.168.50.80:3000/login";
+            window.location.href = "http://localhost:3000/login";
         }
 
     }
@@ -34,7 +34,7 @@ export default class AdminPanel extends React.Component{
                     (response) => {
                         if(response === 'unauthorized'){
                             window.localStorage.clear();
-                            window.location.href = "http://192.168.50.80:3000/login";
+                            window.location.href = "http://localhost:3000/login";
                         }
                         else{
                             this.setState({ users: JSON.parse(response) });

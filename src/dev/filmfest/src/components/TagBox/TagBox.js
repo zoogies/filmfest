@@ -9,7 +9,7 @@ export default function TagBox(props){
                     return(
                         <div onClick={()=>{
 
-                            window.location.href = "http://192.168.50.80:3000/"+tag['type']+"/"+tag['id'];
+                            window.location.href = "http://localhost:3000/"+tag['type']+"/"+tag['id'];
 
                         }} key={tag['id']} className='level1 TagBoxTag'>
                             <h2 className='TagBoxTagText'>{tag['name']}</h2>

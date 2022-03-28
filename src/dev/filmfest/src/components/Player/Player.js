@@ -46,7 +46,7 @@ export default class Player extends React.Component{
         basicxhr("videodata",{"videoid":this.state.videoid}).then(
             (response) => {
                 if(response === 'notfound'){
-                    window.location.href = "http://192.168.50.80:3000/notfound";
+                    window.location.href = "http://localhost:3000/notfound";
                 }
                 else{
                     this.setState({videodata:JSON.parse(response)});

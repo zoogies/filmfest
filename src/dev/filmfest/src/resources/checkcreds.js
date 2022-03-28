@@ -6,7 +6,7 @@ export default function checkcreds(){
             const epochdiff = window.localStorage.getItem("gerdyexpires") - Math.round(Date.now()/1000);
             if(epochdiff <=  0){ //if epoch is literally expired
                 window.localStorage.clear();
-                window.location.href = "http://192.168.50.80:3000/login"
+                window.location.href = "http://localhost:3000/login"
             }
             else if(epochdiff <= 3600){ //if our current epoch is less than or equal to an hour away from our auth tokens expiration
                 //could cross check the expire time here for even more security but redundant
@@ -14,7 +14,7 @@ export default function checkcreds(){
                     function (response){
                         if(response === 'wrong'){
                             window.localStorage.clear();
-                            window.location.href = "http://192.168.50.80:3000/login"
+                            window.location.href = "http://localhost:3000/login"
                         }
                         else{
                             const key = JSON.parse(response)['key']

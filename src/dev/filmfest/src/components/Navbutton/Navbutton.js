@@ -8,21 +8,21 @@ export default function Navbutton(props){
             if(props.location === 'profile'){
                 checkcreds().then(function(){
                     if(window.localStorage.getItem('gerdyid') !== null){
-                        window.location.href = "http://192.168.50.80:3000/user/" + window.localStorage.getItem('gerdyid');
+                        window.location.href = "http://localhost:3000/user/" + window.localStorage.getItem('gerdyid');
                     }
                     else {
                         window.localStorage.clear();
-                        window.location.href = "http://192.168.50.80:3000/login";
+                        window.location.href = "http://localhost:3000/login";
                     }
                 })
             }
             else if(props.location === 'signout'){
                 //TODO MAKE THIS CLEAR SERVER SIDE KEY FOR EXTRA SECURITY I CANT BE FUCKED RIGHT NOW
                 window.localStorage.clear();
-                window.location.href = "http://192.168.50.80:3000/login";
+                window.location.href = "http://localhost:3000/login";
             }
             else{
-                window.location.href = "http://192.168.50.80:3000/" + props.location;
+                window.location.href = "http://localhost:3000/" + props.location;
             }
             }} className='level1 navbutton'>
             <h3 className='navbuttontext'>{props.text}</h3>
