@@ -7,6 +7,11 @@ export default function Stars(props){
     if(props.rating === 0){
         return(
             <div>
+                <BsStar size={40} color="gray"/>
+                <BsStar size={40} color="gray"/>
+                <BsStar size={40} color="gray"/>
+                <BsStar size={40} color="gray"/>
+                <BsStar size={40} color="gray"/>
             </div>
         )
     }

@@ -96,6 +96,7 @@
     padding: 10px;
     padding-top: 0px;
     padding-bottom: 0px;
+    flex-wrap: wrap;
 }
 
 .titleviewsdate{
@@ -111,6 +112,7 @@
     margin-left: auto;
     flex-direction: column;
     flex-wrap: wrap;
+    margin-top: 5px;
 }
 
 .ratingnum{

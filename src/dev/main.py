@@ -173,7 +173,13 @@ def editprofile():
     else:
         return "unauthorized"
 
-#MAKE SURE POST COMMENT ROUTE AUTHENTICATED
+@app.route("/ratevideo", methods=["POST"])
+def ratevideo():
+    if(authorized(request.json['id'], request.json['key'])):
+        execute_db('insert into ratings (videoid,ownerid,stars) values ("'+request.json['videoid']+'","'+request.json['id']+'","'+str(request.json['rating'])+'")')
+        return "done"
+    else:
+        return "unauthorized"
 
 @app.route("/getvideoratings", methods=["POST"])
 def getvideocomments():
@@ -190,8 +196,15 @@ def getvideocomments():
         }
         comments.append(c)
 
+    canrate = False
+    if(request.json['userid'] != None):
+        if(len(query_db('select * from ratings where ownerid="'+request.json['userid']+'" and videoid="'+request.json['videoid']+'"')) == 0):
+            canrate = True
 
-    return json.dumps(comments)
+    return json.dumps({
+        "comments":comments,
+        "canrate":canrate,
+    })
 
 @app.route("/videouploadpre", methods=["POST"])
 def videouploadpre():

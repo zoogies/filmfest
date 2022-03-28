@@ -3,6 +3,7 @@ import './Comments.css'
 import Comment from "../Comment/Comment";
 import React from 'react';
 import basicxhr from '../../resources/xhr';
+import SubmitRating from '../SubmitRating/SubmitRating';
 
 export default class Comments extends React.Component{
     constructor(props){
@@ -15,7 +16,7 @@ export default class Comments extends React.Component{
     }
 
     componentDidMount(){
-        basicxhr("getvideoratings",{"videoid":this.state.videoid}).then(
+        basicxhr("getvideoratings",{"videoid":this.state.videoid,"userid":window.localStorage.getItem('gerdyid')}).then(
             (response) => {
                 this.setState({commentdata:JSON.parse(response)});
             }
@@ -25,7 +26,7 @@ export default class Comments extends React.Component{
     render(){
         if(this.state.commentdata !== null){
             return(
-                <Commentlayout content={this.state.commentdata}/>
+                <Commentlayout videoid={this.state.videoid} ability={this.state.commentdata['canrate']} content={this.state.commentdata['comments']}/>
             )
         }
         else{
@@ -40,11 +41,11 @@ export default class Comments extends React.Component{
 }
 
 function Commentlayout(props){
-    console.log(props.content[0])
     if(props.content[0] !== undefined){
         return(
             <div className="level2 comments">
                 <h1 className='commentstext'>Recent Ratings:</h1>
+                <SubmitRating videoid={props.videoid} ability={props.ability}/>
                 <div className='commentbox'>
                     {
                     props.content.map((comment) =>{
@@ -60,6 +61,7 @@ function Commentlayout(props){
         return (
             <div className="level2 comments">
                 <h1 className='commentstext'>Recent Ratings:</h1>
+                <SubmitRating videoid={props.videoid} ability={props.ability}/>
                 <div className='commentbox'>
                     <h1>No Ratings!</h1> 
                 </div>
